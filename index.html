@@ -344,44 +344,37 @@
   </div>
 
 <script>
-  // CONFIG SUPABASE
+  // 👉 CONFIG SUPABASE DIGIY CORE
   const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-  // Lien où le mail magique enverra l'abonné (ton futur "Mon Espace")
+  // 👉 Après clic sur le lien magique → on envoie vers MON ESPACE sur GitHub
   const REDIRECT_URL = "https://beauville.github.io/mon-espace-digiy/";
 
-  const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  const form = document.getElementById("digiy-form");
+  const form = document.getElementById("digiy-inscription-form");
   const statusEl = document.getElementById("status");
   const submitBtn = document.getElementById("submitBtn");
 
-  function setStatus(msg, type){
-    statusEl.textContent = msg || "";
-    statusEl.className = type || "";
+  function setStatus(message, type){
+    statusEl.textContent = message || "";
+    statusEl.className = "status" + (type ? " " + type : "");
   }
 
-  form.addEventListener("submit", async (e)=>{
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    setStatus("");
+    setStatus("", "");
     submitBtn.disabled = true;
 
-    const fullNameInput = document.getElementById("fullName");
-    const phoneInput = document.getElementById("phone");
-    const countryInput = document.getElementById("country");
-    const emailInput = document.getElementById("email");
-    const mainModuleSelect = document.getElementById("mainModule");
-    const notesInput = document.getElementById("notes");
+    const fullName   = document.getElementById("fullName").value.trim();
+    const phone      = document.getElementById("phone").value.trim();
+    const country    = document.getElementById("country").value.trim();
+    const email      = document.getElementById("email").value.trim().toLowerCase();
+    const mainModule = document.getElementById("mainModule").value;
+    const notes      = document.getElementById("notes").value.trim();
 
-    const fullName = fullNameInput.value.trim();
-    const phone = phoneInput.value.trim();
-    const country = countryInput.value.trim();
-    const email = emailInput.value.trim().toLowerCase();
-    const mainModule = mainModuleSelect.value;
-    const notes = notesInput.value.trim();
-
-    if(!fullName || !phone || !country || !email || !mainModule){
+    if (!fullName || !phone || !country || !email || !mainModule){
       setStatus("Merci de remplir tous les champs obligatoires.", "error");
       submitBtn.disabled = false;
       return;
@@ -389,7 +382,7 @@
 
     try{
       // 1) Enregistrer la pré-inscription
-      const { error: insertErr } = await client
+      const { error: insertError } = await client
         .from("pre_registrations")
         .insert([{
           full_name: fullName,
@@ -398,36 +391,37 @@
           country: country,
           email: email,
           preferred_module: mainModule,
-          modules: [mainModule],
-          notes: notes,
+          modules: [mainModule],      // ARRAY
           status: "pre_registered",
-          source: "inscription-github",
+          notes: notes,
           created_at: new Date().toISOString()
         }]);
 
-      if(insertErr){
-        console.error("Insert error", insertErr);
+      if (insertError){
+        console.error("Insert error", insertError);
         setStatus(
-          "Inscription partielle : erreur sur la fiche (" +
-          insertErr.message + ")",
+          "Inscription partielle : fiche non enregistrée correctement. (" +
+          insertError.message + ")",
           "error"
         );
       } else {
-        setStatus("Fiche enregistrée ✔️ Envoi du lien magique…", "success");
+        setStatus("Fiche envoyée. Envoi du lien de connexion en cours…", "success");
       }
 
       // 2) Envoi du lien magique
-      const { error: authErr } = await client.auth.signInWithOtp({
+      const { error: authError } = await client.auth.signInWithOtp({
         email,
-        options:{ emailRedirectTo: REDIRECT_URL }
+        options: {
+          emailRedirectTo: REDIRECT_URL,
+        }
       });
 
-      if(authErr){
-        console.error("Auth error", authErr);
-        setStatus("Erreur lors de l’envoi du mail : " + authErr.message, "error");
+      if (authError){
+        console.error("Auth error", authError);
+        setStatus("Erreur lors de l’envoi du lien de connexion : " + authError.message, "error");
       } else {
         setStatus(
-          "🎉 C’est bon ! Vérifie ta boîte mail : un lien magique DIGIY t’attend pour ouvrir ton HUB.",
+          "🎉 C’est bon ! Vérifie ta boîte mail : un lien magique DIGIY t’attend pour ouvrir ton HUB personnel.",
           "success"
         );
         form.reset();
