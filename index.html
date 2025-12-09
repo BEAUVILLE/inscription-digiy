@@ -5,33 +5,41 @@
   <title>Inscription DIGIY HUB — 0% Commission</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Styles DIGIY -->
+  <!-- Styles DIGIY VERT SÉNÉGAL -->
   <style>
     :root{
-      --bg:#020617;
-      --bg-soft:#030712;
-      --card:#020617;
-      --accent:#facc15;
+      --bg:#022c22;          /* vert profond */
+      --bg2:#065f46;         /* vert moyen */
+      --card:#052e16;        /* carte sombre verte */
+      --accent:#facc15;      /* or DIGIY */
       --accent-soft:rgba(250,204,21,0.12);
       --text:#e5e7eb;
       --muted:#9ca3af;
       --danger:#f97373;
       --success:#22c55e;
-      --border:#1f2937;
-      --input-bg:#020617;
+      --border:rgba(148,163,184,0.45);
+      --input-bg:rgba(15,23,42,0.75);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
     body{
       margin:0;
       padding:0;
-      background:radial-gradient(circle at top,#111827 0,#020617 55%);
-      color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"Manrope","Outfit",sans-serif;
+      min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      min-height:100vh;
       padding:20px;
+      font-family:-apple-system,BlinkMacSystemFont,"Manrope","Outfit",system-ui,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top,#16a34a22 0,transparent 55%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
     }
 
     .page{
@@ -53,26 +61,32 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      background:radial-gradient(circle at 30% 0,#facc15 0,transparent 55%);
-      border:1px solid rgba(250,204,21,0.5);
-      color:#111827;
+      background:
+        radial-gradient(circle at 30% 0,#facc15 0,transparent 55%),
+        radial-gradient(circle at bottom,#16a34a66 0,transparent 60%);
+      border:1px solid rgba(250,204,21,0.6);
+      color:#022c22;
       font-size:22px;
       font-weight:800;
+      box-shadow:0 0 25px rgba(250,204,21,0.45);
     }
     .logo-text{
       text-transform:uppercase;
-      font-size:14px;
-      letter-spacing:0.12em;
+      font-size:13px;
+      letter-spacing:0.16em;
       color:var(--muted);
       font-weight:700;
     }
 
     .card{
-      background:linear-gradient(145deg,rgba(15,23,42,0.98),rgba(2,6,23,0.98));
+      background:
+        linear-gradient(145deg,rgba(5,46,22,0.97),rgba(6,95,70,0.96));
       border-radius:24px;
-      border:1px solid rgba(148,163,184,0.18);
+      border:1px solid rgba(15,118,110,0.7);
       padding:24px 20px 22px;
-      box-shadow:0 24px 60px rgba(0,0,0,0.75);
+      box-shadow:
+        0 24px 60px rgba(0,0,0,0.75),
+        0 0 0 1px rgba(15,118,110,0.3);
       backdrop-filter:blur(16px);
     }
 
@@ -81,13 +95,14 @@
       text-align:center;
       font-size:22px;
       text-transform:uppercase;
-      letter-spacing:0.08em;
+      letter-spacing:0.10em;
       font-weight:800;
     }
     h1 .accent{
       color:var(--accent);
-      text-shadow:0 0 18px rgba(250,204,21,0.45);
+      text-shadow:0 0 22px rgba(250,204,21,0.65);
     }
+
     .subtitle{
       text-align:center;
       color:var(--muted);
@@ -106,12 +121,13 @@
       padding:5px 12px;
       border-radius:999px;
       font-size:11px;
-      border:1px solid rgba(148,163,184,0.3);
-      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.35);
+      background:rgba(15,23,42,0.85);
       color:var(--muted);
       display:flex;
       gap:4px;
       align-items:center;
+      backdrop-filter:blur(10px);
     }
     .pill i{
       color:var(--accent);
@@ -124,13 +140,18 @@
       gap:12px;
     }
 
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
     label{
       font-size:12px;
       color:var(--muted);
       font-weight:500;
-      letter-spacing:0.05em;
+      letter-spacing:0.06em;
       text-transform:uppercase;
-      margin-bottom:4px;
     }
     .required::after{
       content:"*";
@@ -139,7 +160,7 @@
     }
 
     input, select{
-      padding:12px 14px;
+      padding:11px 13px;
       width:100%;
       border-radius:12px;
       border:1px solid var(--border);
@@ -147,42 +168,99 @@
       color:var(--text);
       outline:none;
       font-size:14px;
+      transition:border 0.15s, box-shadow 0.15s, background 0.15s;
     }
+
+    input::placeholder{
+      color:#6b7280;
+    }
+
     input:focus, select:focus{
       border-color:var(--accent);
-      box-shadow:0 0 0 1px rgba(250,204,21,0.4);
+      box-shadow:
+        0 0 0 1px rgba(250,204,21,0.35),
+        0 0 25px rgba(34,197,94,0.45);
+      background:rgba(15,23,42,0.95);
+    }
+
+    select{
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      background-image:
+        linear-gradient(45deg,transparent 50%,var(--muted) 50%),
+        linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+      background-position:
+        calc(100% - 16px) 16px,
+        calc(100% - 11px) 16px;
+      background-size:6px 6px,6px 6px;
+      background-repeat:no-repeat;
+    }
+
+    .hint{
+      font-size:11px;
+      color:var(--muted);
     }
 
     button{
       margin-top:10px;
-      padding:14px;
+      padding:13px;
       border-radius:999px;
       border:none;
-      font-size:14px;
+      font-size:13px;
       font-weight:700;
       background:linear-gradient(135deg,#facc15,#eab308);
-      color:#111827;
+      color:#022c22;
       cursor:pointer;
       text-transform:uppercase;
-      letter-spacing:0.12em;
+      letter-spacing:0.14em;
       display:flex;
       gap:8px;
       justify-content:center;
-      box-shadow:0 10px 26px rgba(250,204,21,0.45);
+      align-items:center;
+      box-shadow:
+        0 10px 26px rgba(250,204,21,0.55),
+        0 0 25px rgba(250,204,21,0.42);
+      transition:transform 0.08s, box-shadow 0.08s, filter 0.08s;
+    }
+    button span.icon{
+      font-size:16px;
+    }
+    button:hover:not(:disabled){
+      filter:brightness(1.03);
+      transform:translateY(-1px);
+    }
+    button:active:not(:disabled){
+      transform:translateY(1px) scale(0.995);
+      box-shadow:
+        0 4px 16px rgba(0,0,0,0.8),
+        0 0 12px rgba(250,204,21,0.4);
     }
     button:disabled{
-      opacity:0.7;
+      opacity:0.75;
       cursor:not-allowed;
+      box-shadow:none;
     }
 
     #status{
-      font-size:13px;
-      margin-top:6px;
+      font-size:12px;
+      margin-top:8px;
       min-height:18px;
       text-align:center;
     }
     .error{color:var(--danger);}
     .success{color:var(--success);}
+
+    .footnote{
+      margin-top:10px;
+      font-size:10px;
+      color:var(--muted);
+      text-align:center;
+      line-height:1.4;
+    }
+    .footnote strong{
+      color:var(--accent);
+    }
   </style>
 
   <!-- Supabase CDN -->
@@ -193,7 +271,7 @@
   <div class="page">
     <div class="logo">
       <div class="logo-icon">🦅</div>
-      <div class="logo-text">DIGIY HUB</div>
+      <div class="logo-text">DIGIY HUB • INSCRIPTION</div>
     </div>
 
     <div class="card">
@@ -204,129 +282,163 @@
 
       <div class="pill-row">
         <div class="pill"><i>✓</i> 0% commission</div>
-        <div class="pill"><i>✓</i> Paiement direct</div>
+        <div class="pill"><i>✓</i> Paiement direct au pro</div>
         <div class="pill"><i>✓</i> Données souveraines</div>
       </div>
 
-      <form id="form">
-        <div>
-          <label class="required">Nom complet</label>
+      <form id="digiy-form">
+        <div class="field">
+          <label for="fullName" class="required">Nom complet</label>
           <input id="fullName" required placeholder="Ex. Fatou Ndiaye">
         </div>
 
-        <div>
-          <label class="required">Téléphone</label>
+        <div class="field">
+          <label for="phone" class="required">Téléphone (WhatsApp)</label>
           <input id="phone" required placeholder="+221 77 000 00 00">
         </div>
 
-        <div>
-          <label class="required">Pays</label>
+        <div class="field">
+          <label for="country" class="required">Pays</label>
           <input id="country" required value="Sénégal">
         </div>
 
-        <div>
-          <label class="required">Email de connexion</label>
+        <div class="field">
+          <label for="email" class="required">Email de connexion</label>
           <input id="email" type="email" required placeholder="exemple@domaine.com">
+          <div class="hint">
+            Cet email recevra ton lien magique DIGIY (sans mot de passe).
+          </div>
         </div>
 
-        <div>
-          <label class="required">Module principal</label>
+        <div class="field">
+          <label for="mainModule" class="required">Module principal</label>
           <select id="mainModule" required>
             <option value="">— Choisir —</option>
-            <option value="driver">DIGIY DRIVER</option>
-            <option value="loc">DIGIY LOC</option>
-            <option value="resto">DIGIY RESTO</option>
-            <option value="market">DIGIY MARKET</option>
-            <option value="jobs">DIGIY JOBS</option>
-            <option value="multi">Pack Multi-modules</option>
+            <option value="driver">🚗 DIGIY DRIVER</option>
+            <option value="loc">🏠 DIGIY LOC</option>
+            <option value="resto">🍽️ DIGIY RESTO</option>
+            <option value="market">🏪 DIGIY MARKET</option>
+            <option value="jobs">💼 DIGIY JOBS</option>
+            <option value="multi">🦅 Pack Multi-modules</option>
           </select>
         </div>
 
-        <div>
-          <label>Notes (optionnel)</label>
+        <div class="field">
+          <label for="notes">Notes (optionnel)</label>
           <input id="notes" placeholder="Ex. 2 maisons à louer à Saly…">
         </div>
 
-        <button type="submit" id="btn">
-          🦅 Rejoindre DIGIY
+        <button type="submit" id="submitBtn">
+          <span class="icon">🦅</span>
+          <span>Rejoindre DIGIY</span>
         </button>
 
         <div id="status"></div>
+
+        <div class="footnote">
+          Un <strong>email avec lien magique</strong> te donnera accès à ton HUB personnel.<br>
+          Tu pourras activer d’autres modules plus tard.
+        </div>
       </form>
     </div>
   </div>
 
 <script>
-    // CONFIG SUPABASE
-    const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
+  // CONFIG SUPABASE
+  const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-    // Lien où le mail magique Supabase doit envoyer
-    const REDIRECT_URL = "https://beauville.github.io/mon-espace-digiy/";
+  // Lien où le mail magique enverra l'abonné (ton futur "Mon Espace")
+  const REDIRECT_URL = "https://beauville.github.io/mon-espace-digiy/";
 
-    const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    const form = document.getElementById("form");
-    const statusEl = document.getElementById("status");
-    const btn = document.getElementById("btn");
+  const form = document.getElementById("digiy-form");
+  const statusEl = document.getElementById("status");
+  const submitBtn = document.getElementById("submitBtn");
 
-    function setStatus(msg, type){
-      statusEl.textContent = msg;
-      statusEl.className = type;
+  function setStatus(msg, type){
+    statusEl.textContent = msg || "";
+    statusEl.className = type || "";
+  }
+
+  form.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    setStatus("");
+    submitBtn.disabled = true;
+
+    const fullNameInput = document.getElementById("fullName");
+    const phoneInput = document.getElementById("phone");
+    const countryInput = document.getElementById("country");
+    const emailInput = document.getElementById("email");
+    const mainModuleSelect = document.getElementById("mainModule");
+    const notesInput = document.getElementById("notes");
+
+    const fullName = fullNameInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const country = countryInput.value.trim();
+    const email = emailInput.value.trim().toLowerCase();
+    const mainModule = mainModuleSelect.value;
+    const notes = notesInput.value.trim();
+
+    if(!fullName || !phone || !country || !email || !mainModule){
+      setStatus("Merci de remplir tous les champs obligatoires.", "error");
+      submitBtn.disabled = false;
+      return;
     }
 
-    form.addEventListener("submit", async (e)=>{
-      e.preventDefault();
-      setStatus("");
-      btn.disabled = true;
-
-      const fullName = fullName.value.trim();
-      const phone = phone.value.trim();
-      const country = country.value.trim();
-      const email = email.value.trim().toLowerCase();
-      const mainModule = mainModule.value;
-      const notes = notes.value.trim();
-
-      // Enregistrement Supabase
+    try{
+      // 1) Enregistrer la pré-inscription
       const { error: insertErr } = await client
         .from("pre_registrations")
         .insert([{
           full_name: fullName,
-          phone,
+          phone: phone,
           whatsapp: phone,
-          country,
-          email,
+          country: country,
+          email: email,
           preferred_module: mainModule,
           modules: [mainModule],
-          notes,
+          notes: notes,
           status: "pre_registered",
           source: "inscription-github",
           created_at: new Date().toISOString()
         }]);
 
       if(insertErr){
-        console.error(insertErr);
-        setStatus("Erreur enregistrement : " + insertErr.message, "error");
+        console.error("Insert error", insertErr);
+        setStatus(
+          "Inscription partielle : erreur sur la fiche (" +
+          insertErr.message + ")",
+          "error"
+        );
       } else {
         setStatus("Fiche enregistrée ✔️ Envoi du lien magique…", "success");
       }
 
-      // Lien magique Supabase
+      // 2) Envoi du lien magique
       const { error: authErr } = await client.auth.signInWithOtp({
         email,
         options:{ emailRedirectTo: REDIRECT_URL }
       });
 
       if(authErr){
-        console.error(authErr);
-        setStatus("Erreur email : " + authErr.message, "error");
+        console.error("Auth error", authErr);
+        setStatus("Erreur lors de l’envoi du mail : " + authErr.message, "error");
       } else {
-        setStatus("🎉 Vérifie ton email pour ouvrir ton HUB DIGIY.", "success");
+        setStatus(
+          "🎉 C’est bon ! Vérifie ta boîte mail : un lien magique DIGIY t’attend pour ouvrir ton HUB.",
+          "success"
+        );
         form.reset();
       }
-
-      btn.disabled = false;
-    });
+    } catch(err){
+      console.error(err);
+      setStatus("Erreur inattendue. Réessaie dans un instant.", "error");
+    } finally{
+      submitBtn.disabled = false;
+    }
+  });
 </script>
 
 </body>
