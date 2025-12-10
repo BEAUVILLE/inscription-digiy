@@ -286,6 +286,7 @@
         <div class="pill"><i>✓</i> Données souveraines</div>
       </div>
 
+      <!-- ⚠️ ID DU FORMULAIRE = "digiy-form" -->
       <form id="digiy-form">
         <div class="field">
           <label for="fullName" class="required">Nom complet</label>
@@ -353,13 +354,14 @@
 
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  const form = document.getElementById("digiy-inscription-form");
+  // 🔧 on utilise bien l'ID correct du formulaire
+  const form = document.getElementById("digiy-form");
   const statusEl = document.getElementById("status");
   const submitBtn = document.getElementById("submitBtn");
 
   function setStatus(message, type){
     statusEl.textContent = message || "";
-    statusEl.className = "status" + (type ? " " + type : "");
+    statusEl.className = type || ""; // "error" ou "success"
   }
 
   form.addEventListener("submit", async (e) => {
