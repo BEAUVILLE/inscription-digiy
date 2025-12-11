@@ -70,43 +70,7 @@
       font-weight:800;
       box-shadow:0 0 25px rgba(250,204,21,0.45);
     }
-    <section class="digiy-loc-kyc">
-  <h2>🏡 DIGIY LOC – Inscription propriétaire</h2>
-  <p>Remplis ce formulaire, on ouvre ton dossier propriétaire chez DIGIY.</p>
-
-  <form id="digiy-loc-kyc-form">
-    <label>
-      Nom complet*
-      <input type="text" name="fullName" required>
-    </label>
-
-    <label>
-      Téléphone (WhatsApp)*
-      <input type="tel" name="phone" placeholder="+221…" required>
-    </label>
-
-    <label>
-      Email
-      <input type="email" name="email">
-    </label>
-
-    <label>
-      Type de bien
-      <select name="propertyType">
-        <option value="appartement">Appartement</option>
-        <option value="villa">Villa</option>
-        <option value="studio">Studio</option>
-        <option value="chambre">Chambre</option>
-      </select>
-    </label>
-
-    <button type="submit">🚀 Envoyer ma demande propriétaire</button>
-
-    <p id="digiy-loc-kyc-status"></p>
-  </form>
-</section>
-
-<script src="./digiy-kyc.js"></script>    .logo-text{
+    .logo-text{
       text-transform:uppercase;
       font-size:13px;
       letter-spacing:0.16em;
@@ -390,7 +354,6 @@
 
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // 🔧 on utilise bien l'ID correct du formulaire
   const form = document.getElementById("digiy-form");
   const statusEl = document.getElementById("status");
   const submitBtn = document.getElementById("submitBtn");
@@ -429,7 +392,7 @@
           country: country,
           email: email,
           preferred_module: mainModule,
-          modules: [mainModule],      // ARRAY
+          modules: [mainModule],
           status: "pre_registered",
           notes: notes,
           created_at: new Date().toISOString()
