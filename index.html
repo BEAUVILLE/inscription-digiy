@@ -47,12 +47,63 @@
       max-width:480px;
     }
 
+    /* TOPBAR */
+    .topbar{
+      display:flex;
+      gap:10px;
+      margin-bottom:14px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .back-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      text-decoration:none;color:#fff;font-weight:900;
+      font-size:13px;padding:12px 14px;border-radius:14px;
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.25);
+      backdrop-filter:blur(10px);
+    }
+
+    .quick-row{
+      display:flex;
+      gap:10px;
+      flex:1;
+      justify-content:flex-end;
+      min-width:240px;
+    }
+    .quick-btn{
+      flex:1;
+      text-align:center;
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:900;
+      text-decoration:none;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .btn-menu{
+      color:#022c22;
+      background:linear-gradient(135deg,#facc15,#eab308);
+      box-shadow:0 10px 26px rgba(250,204,21,0.45), 0 0 18px rgba(250,204,21,0.18);
+      border:0;
+    }
+    .btn-ba{
+      color:#e5e7eb;
+      background:rgba(15,23,42,0.85);
+      border:1px solid rgba(148,163,184,0.35);
+      box-shadow:0 10px 26px rgba(0,0,0,0.22);
+    }
+
     .logo{
       display:flex;
       align-items:center;
       justify-content:center;
       gap:10px;
-      margin-bottom:20px;
+      margin-bottom:18px;
+      margin-top:6px;
     }
     .logo-icon{
       width:46px;
@@ -108,6 +159,7 @@
       color:var(--muted);
       font-size:13px;
       margin-bottom:14px;
+      line-height:1.35;
     }
 
     .pill-row{
@@ -269,6 +321,23 @@
 
 <body>
   <div class="page">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <a class="back-btn" href="https://digiylyfe.com/accueil-digiy/">
+        ← Retour au HUB DIGIY
+      </a>
+
+      <div class="quick-row">
+        <a class="quick-btn btn-menu" href="https://digiylyfe.com/menu-digiy/">
+          🦅 Menu DIGIY
+        </a>
+        <a class="quick-btn btn-ba" href="https://digiylyfe.com/page-bonne-affaire/">
+          🟡 Bonne Affaire
+        </a>
+      </div>
+    </div>
+
     <div class="logo">
       <div class="logo-icon">🦅</div>
       <div class="logo-text">DIGIY HUB • INSCRIPTION</div>
@@ -286,7 +355,6 @@
         <div class="pill"><i>✓</i> Données souveraines</div>
       </div>
 
-      <!-- ⚠️ ID DU FORMULAIRE = "digiy-form" -->
       <form id="digiy-form">
         <div class="field">
           <label for="fullName" class="required">Nom complet</label>
@@ -315,10 +383,16 @@
           <label for="mainModule" class="required">Module principal</label>
           <select id="mainModule" required>
             <option value="">— Choisir —</option>
+            <option value="bonne_affaire">🟡 DIGIY BONNE AFFAIRE</option>
+
             <option value="driver">🚗 DIGIY DRIVER</option>
+            <option value="resa_table">🍽️ DIGIY RÉSA TABLE</option>
             <option value="loc">🏠 DIGIY LOC</option>
-            <option value="resto">🍽️ DIGIY RESTO</option>
-            <option value="market">🏪 DIGIY MARKET</option>
+            <option value="explore">🧭 DIGIY EXPLORE</option>
+            <option value="build">🛠️ DIGIY BUILD</option>
+            <option value="market">🛒 DIGIY MARKET</option>
+            <option value="pay">💳 DIGIY PAY</option>
+
             <option value="jobs">💼 DIGIY JOBS</option>
             <option value="multi">🦅 Pack Multi-modules</option>
           </select>
@@ -345,11 +419,11 @@
   </div>
 
 <script>
-  // 👉 CONFIG SUPABASE DIGIY CORE
+  // CONFIG SUPABASE DIGIY CORE
   const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
-  // 👉 Après clic sur le lien magique → on envoie vers MON ESPACE sur GitHub
+  // Après clic sur le lien magique → HUB perso (garde GitHub si tu préfères)
   const REDIRECT_URL = "https://beauville.github.io/mon-espace-digiy/";
 
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -360,7 +434,7 @@
 
   function setStatus(message, type){
     statusEl.textContent = message || "";
-    statusEl.className = type || ""; // "error" ou "success"
+    statusEl.className = type || "";
   }
 
   form.addEventListener("submit", async (e) => {
@@ -438,3 +512,4 @@
 
 </body>
 </html>
+
