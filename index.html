@@ -173,7 +173,7 @@
 
     <div class="card">
       <h1><span class="accent">Inscription</span> DIGIY</h1>
-      <div class="subtitle">Une seule fiche. Tous tes modules DIGIY (Driver, Loc, Resto, Market, Jobs…)</div>
+      <div class="subtitle">Une seule fiche. Tous tes modules DIGIY (Driver, Loc, Resto, Market, Jobs, Fret…)</div>
 
       <div class="pill-row">
         <div class="pill"><i>✓</i> 0% commission</div>
@@ -208,6 +208,10 @@
           <select id="mainModule" required>
             <option value="">— Choisir —</option>
             <option value="bonne_affaire">🟡 DIGIY BONNE AFFAIRE</option>
+            
+            <!-- ✅ NOUVEAU : OPTIONS FRET -->
+            <option value="fret_chauffeur">🚚 DIGIY FRET CHAUFFEUR</option>
+            <option value="fret_client">📦 DIGIY FRET CLIENT</option>
 
             <option value="driver">🚗 DIGIY DRIVER</option>
             <option value="resa_table">🍽️ DIGIY RÉSA TABLE</option>
@@ -216,7 +220,6 @@
             <option value="build">🛠️ DIGIY BUILD</option>
             <option value="market">🛒 DIGIY MARKET</option>
             <option value="pay">💳 DIGIY PAY</option>
-
             <option value="jobs">💼 DIGIY JOBS</option>
             <option value="multi">🦅 Pack Multi-modules</option>
           </select>
@@ -236,7 +239,7 @@
 
         <div class="footnote">
           Un <strong>email avec lien magique</strong> te donnera accès à ton espace.<br>
-          Tu pourras activer d’autres modules plus tard.
+          Tu pourras activer d'autres modules plus tard.
         </div>
       </form>
     </div>
@@ -250,11 +253,16 @@
   // ✅ Hub perso fallback si module inconnu / multi
   const HUB_FALLBACK = "https://beauville.github.io/mon-espace-digiy/";
 
-  // ✅ Portes par module (tu peux ajouter au fur et à mesure)
+  // ✅ Portes par module (avec FRET intégré)
   function getRedirectUrl(mainModule){
     const base = "https://beauville.github.io/";
     const map = {
       driver: "dashboard-chauffeur/login.html",
+      
+      // ✅ NOUVEAU : REDIRECTIONS FRET
+      fret_chauffeur: "commencer-a-payer/?product=DIGIY_FRET_CHAUFFEUR&role=driver",
+      fret_client: "commencer-a-payer/?product=DIGIY_FRET_CLIENT&role=client",
+      
       // loc: "dashboard-loc/login.html",
       // resa_table: "dashboard-resto/login.html",
       // market: "dashboard-market/login.html",
@@ -331,9 +339,9 @@
 
       if (authError){
         console.error("Auth error", authError);
-        setStatus("Erreur lors de l’envoi du lien de connexion : " + authError.message, "error");
+        setStatus("Erreur lors de l'envoi du lien de connexion : " + authError.message, "error");
       } else {
-        setStatus("🎉 C’est bon ! Vérifie ta boîte mail : un lien magique DIGIY t’attend.", "success");
+        setStatus("🎉 C'est bon ! Vérifie ta boîte mail : un lien magique DIGIY t'attend.", "success");
         form.reset();
       }
     } catch(err){
