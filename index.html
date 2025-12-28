@@ -26,7 +26,7 @@
         radial-gradient(circle at top,#16a34a22 0,transparent 55%),
         linear-gradient(135deg,var(--bg),var(--bg2));
     }
-    .page{width:100%;max-width:600px}
+    .page{width:100%;max-width:700px}
 
     .topbar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;justify-content:space-between;align-items:center}
     .back-btn{
@@ -35,7 +35,9 @@
       padding:12px 14px;border-radius:14px;
       background:rgba(255,255,255,.18);
       border:1px solid rgba(255,255,255,.25);
+      transition:all .2s;
     }
+    .back-btn:hover{background:rgba(255,255,255,.25);transform:translateY(-1px)}
 
     .logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px}
     .logo-icon{
@@ -68,6 +70,13 @@
       color:var(--muted);font-weight:700;
     }
 
+    .section-title{
+      font-size:16px;font-weight:900;color:var(--accent);
+      margin:24px 0 12px;padding-bottom:8px;
+      border-bottom:2px solid rgba(250,204,21,0.3);
+      display:flex;align-items:center;gap:8px;
+    }
+
     form{display:flex;flex-direction:column;gap:16px}
     .field{display:flex;flex-direction:column;gap:6px}
     label{
@@ -76,17 +85,46 @@
     }
     .required::after{content:" *";color:var(--accent)}
 
-    input,select{
+    input,select,textarea{
       padding:13px 14px;width:100%;
       border-radius:12px;border:1px solid var(--border);
       background:var(--input-bg);color:var(--text);
       outline:none;font-size:15px;font-weight:600;
-      transition:all .2s;
+      transition:all .2s;font-family:inherit;
     }
-    input:focus, select:focus{
+    textarea{resize:vertical;min-height:80px}
+    input:focus,select:focus,textarea:focus{
       border-color:var(--accent);
       box-shadow:0 0 0 2px rgba(250,204,21,0.25);
       background:rgba(15,23,42,0.95);
+    }
+    
+    .hint{
+      font-size:12px;color:var(--muted);margin-top:-2px;
+      font-weight:600;line-height:1.4;
+    }
+
+    .gps-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .gps-btn{
+      margin-top:8px;padding:10px;font-size:13px;
+      background:rgba(255,255,255,.15);border-radius:10px;
+      border:1px solid rgba(255,255,255,.25);
+      color:var(--text);font-weight:800;cursor:pointer;
+      transition:all .2s;
+    }
+    .gps-btn:hover{background:rgba(255,255,255,.25);transform:translateY(-1px)}
+
+    .photo-upload{
+      position:relative;padding:20px;
+      border:2px dashed var(--border);border-radius:12px;
+      background:var(--input-bg);text-align:center;
+      cursor:pointer;transition:all .2s;
+    }
+    .photo-upload:hover{border-color:var(--accent);background:rgba(15,23,42,0.95)}
+    .photo-upload input{display:none}
+    .photo-preview{
+      max-width:200px;height:auto;border-radius:8px;
+      margin:12px auto 0;display:none;
     }
     
     .module-option{
@@ -154,7 +192,9 @@
       color:var(--accent);
     }
 
-    button{
+    .services-grid{display:grid;gap:10px}
+
+    button[type="submit"]{
       margin-top:12px;padding:16px;border-radius:999px;border:none;
       font-size:15px;font-weight:900;
       background:linear-gradient(135deg,#facc15,#eab308);
@@ -163,15 +203,21 @@
       box-shadow:0 12px 28px rgba(250,204,21,0.45);
       transition:all .2s;
     }
-    button:hover:not(:disabled){
+    button[type="submit"]:hover:not(:disabled){
       transform:translateY(-2px);
       box-shadow:0 16px 36px rgba(250,204,21,0.55);
     }
-    button:disabled{opacity:.6;cursor:not-allowed}
+    button[type="submit"]:disabled{opacity:.6;cursor:not-allowed}
 
     #status{font-size:13px;margin-top:12px;text-align:center;font-weight:700}
     .success{color:var(--success)}
     .error{color:#f97373}
+
+    @media(max-width:640px){
+      .page{max-width:100%}
+      .card{padding:20px 16px}
+      .gps-grid{grid-template-columns:1fr}
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -197,32 +243,120 @@
       <div class="pill-row">
         <div class="pill">✓ 0% commission</div>
         <div class="pill">✓ Paiement direct</div>
-        <div class="pill">✓ Made in Sénégal</div>
+        <div class="pill">✓ Fiche premium auto</div>
       </div>
 
       <form id="proForm">
+        
+        <!-- SECTION 1: INFOS BUSINESS -->
+        <div class="section-title">📋 Informations business</div>
+
         <div class="field">
           <label class="required">Nom commercial</label>
           <input id="businessName" required placeholder="Ex: Restaurant Chez Astou">
+          <div class="hint">Le nom qui apparaîtra sur ta fiche partenaire</div>
         </div>
 
         <div class="field">
           <label class="required">Téléphone WhatsApp</label>
           <input id="phone" required placeholder="+221 77 123 45 67">
+          <div class="hint">Les clients te contacteront directement sur ce numéro</div>
         </div>
 
         <div class="field">
           <label>Email</label>
           <input id="email" type="email" placeholder="contact@business.sn">
+          <div class="hint">Optionnel - pour recevoir les notifications</div>
         </div>
 
         <div class="field">
           <label class="required">Ville</label>
-          <input id="city" required placeholder="Dakar">
+          <input id="city" required placeholder="Dakar, Saly, Thiès...">
         </div>
 
         <div class="field">
-          <label class="required">Module / Pack</label>
+          <label class="required">Adresse exacte</label>
+          <input id="address" required placeholder="Ex: Quartier résidentiel, face marché Saly">
+          <div class="hint">Adresse précise pour que les clients te trouvent facilement</div>
+        </div>
+
+        <!-- SECTION 2: DESCRIPTION -->
+        <div class="section-title">📝 Description de ton activité</div>
+
+        <div class="field">
+          <label class="required">Description complète</label>
+          <textarea id="description" required maxlength="200" placeholder="Ex: Restaurant traditionnel sénégalais - Thiéboudienne, mafé, yassa. Ambiance familiale, terrasse ombragée, vue sur mer."></textarea>
+          <div class="hint">Max 200 caractères - apparaîtra sur ta fiche premium</div>
+        </div>
+
+        <!-- SECTION 3: PHOTO -->
+        <div class="section-title">📸 Photo principale</div>
+
+        <div class="field">
+          <label class="required">Photo de ta façade / intérieur / logo</label>
+          <div class="photo-upload" id="photoUploadZone">
+            <input type="file" id="mainPhoto" accept="image/*" required>
+            <div id="uploadText">
+              📷 Clique pour ajouter une photo<br>
+              <span style="font-size:12px;color:var(--muted)">JPG/PNG - Max 2 MB</span>
+            </div>
+            <img id="photoPreview" class="photo-preview" alt="Preview">
+          </div>
+          <div class="hint">Photo de qualité = plus de clients !</div>
+        </div>
+
+        <!-- SECTION 4: LOCALISATION GPS -->
+        <div class="section-title">🗺️ Localisation GPS</div>
+
+        <div class="field">
+          <label>Coordonnées GPS (optionnel mais recommandé)</label>
+          <div class="gps-grid">
+            <input id="gpsLat" type="number" step="any" placeholder="Latitude (14.xxxx)">
+            <input id="gpsLng" type="number" step="any" placeholder="Longitude (-16.xxxx)">
+          </div>
+          <button type="button" class="gps-btn" id="getGpsBtn">
+            📍 Détecter ma position automatiquement
+          </button>
+          <div class="hint">Pour apparaître précisément sur la carte NDIMBAL</div>
+        </div>
+
+        <!-- SECTION 5: SERVICES -->
+        <div class="section-title">✨ Tes services principaux</div>
+
+        <div class="field">
+          <label class="required">Liste tes 8 principaux services</label>
+          <div class="services-grid">
+            <input id="service1" required placeholder="1. Ex: Thiéboudienne fraîche du jour">
+            <input id="service2" required placeholder="2. Ex: Mafé au poulet ou boeuf">
+            <input id="service3" required placeholder="3. Ex: Yassa poulet grillé">
+            <input id="service4" required placeholder="4. Ex: Poisson braisé">
+            <input id="service5" placeholder="5. Service supplémentaire (optionnel)">
+            <input id="service6" placeholder="6. Service supplémentaire (optionnel)">
+            <input id="service7" placeholder="7. Service supplémentaire (optionnel)">
+            <input id="service8" placeholder="8. Service supplémentaire (optionnel)">
+          </div>
+          <div class="hint">Min 4 services obligatoires - Sois précis et attractif !</div>
+        </div>
+
+        <!-- SECTION 6: POINTS FORTS -->
+        <div class="section-title">💎 Tes points forts</div>
+
+        <div class="field">
+          <label class="required">4 avantages qui te différencient</label>
+          <div class="services-grid">
+            <input id="feature1" required placeholder="1. Ex: Prix local">
+            <input id="feature2" required placeholder="2. Ex: Produits frais quotidiens">
+            <input id="feature3" required placeholder="3. Ex: Livraison rapide 30min">
+            <input id="feature4" required placeholder="4. Ex: Paiement Wave/Orange Money">
+          </div>
+          <div class="hint">Ces points apparaîtront en badges sur ta fiche</div>
+        </div>
+
+        <!-- SECTION 7: MODULE -->
+        <div class="section-title">🎯 Choix du module / pack</div>
+
+        <div class="field">
+          <label class="required">Sélectionne ton module DIGIY</label>
           
           <div class="module-option" data-module="driver" data-price="9900">
             <div class="module-header">
@@ -345,7 +479,7 @@
         </div>
 
         <button type="submit" id="submitBtn">
-          🦅 Rejoindre DIGIY
+          🦅 Valider mon inscription
         </button>
 
         <div id="status"></div>
@@ -364,6 +498,7 @@ const sb = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key
 let selectedModule = null;
 let selectedPrice = 0;
 
+// Gestion modules
 const moduleOptions = document.querySelectorAll('.module-option');
 const priceSummary = document.getElementById('priceSummary');
 const priceAmount = document.getElementById('priceAmount');
@@ -417,6 +552,59 @@ function updatePrice() {
   }
 }
 
+// Gestion photo
+const photoInput = document.getElementById('mainPhoto');
+const photoPreview = document.getElementById('photoPreview');
+const uploadText = document.getElementById('uploadText');
+const photoUploadZone = document.getElementById('photoUploadZone');
+
+photoUploadZone.addEventListener('click', () => photoInput.click());
+
+photoInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      photoPreview.src = e.target.result;
+      photoPreview.style.display = 'block';
+      uploadText.innerHTML = '✅ Photo ajoutée<br><span style="font-size:12px">Clique pour changer</span>';
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Gestion GPS
+document.getElementById('getGpsBtn').addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    alert('Géolocalisation non supportée par ton navigateur');
+    return;
+  }
+  
+  const btn = document.getElementById('getGpsBtn');
+  btn.textContent = '⏳ Détection en cours...';
+  btn.disabled = true;
+  
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      document.getElementById('gpsLat').value = position.coords.latitude.toFixed(6);
+      document.getElementById('gpsLng').value = position.coords.longitude.toFixed(6);
+      btn.textContent = '✅ Position détectée !';
+      btn.style.background = 'rgba(34,197,94,0.2)';
+      setTimeout(() => {
+        btn.textContent = '📍 Détecter ma position automatiquement';
+        btn.style.background = 'rgba(255,255,255,.15)';
+        btn.disabled = false;
+      }, 3000);
+    },
+    (error) => {
+      alert('Impossible de détecter ta position. Active la géolocalisation sur ton appareil.');
+      btn.textContent = '📍 Détecter ma position automatiquement';
+      btn.disabled = false;
+    }
+  );
+});
+
+// Soumission formulaire
 const form = document.getElementById('proForm');
 const statusEl = document.getElementById('status');
 const submitBtn = document.getElementById('submitBtn');
@@ -424,27 +612,157 @@ const submitBtn = document.getElementById('submitBtn');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   
+  // Validation module
   if (!selectedModule) {
     statusEl.textContent = '⚠️ Veuillez sélectionner un module ou pack';
     statusEl.className = 'error';
     return;
   }
   
+  // Récupération champs de base
   const businessName = document.getElementById('businessName').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const email = document.getElementById('email').value.trim();
   const city = document.getElementById('city').value.trim();
+  const address = document.getElementById('address').value.trim();
+  const description = document.getElementById('description').value.trim();
+  const gpsLat = document.getElementById('gpsLat').value;
+  const gpsLng = document.getElementById('gpsLng').value;
   
-  if (!businessName || !phone || !city) {
+  // Récupération services
+  const services = [];
+  for (let i = 1; i <= 8; i++) {
+    const val = document.getElementById('service' + i).value.trim();
+    if (val) services.push(val);
+  }
+  
+  // Récupération features
+  const features = [
+    document.getElementById('feature1').value.trim(),
+    document.getElementById('feature2').value.trim(),
+    document.getElementById('feature3').value.trim(),
+    document.getElementById('feature4').value.trim()
+  ].filter(f => f);
+  
+  // Validations
+  if (!businessName || !phone || !city || !address || !description) {
     statusEl.textContent = '⚠️ Veuillez remplir tous les champs obligatoires';
+    statusEl.className = 'error';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  
+  if (services.length < 4) {
+    statusEl.textContent = '⚠️ Veuillez renseigner au moins 4 services';
+    statusEl.className = 'error';
+    return;
+  }
+  
+  if (features.length < 4) {
+    statusEl.textContent = '⚠️ Veuillez renseigner vos 4 points forts';
+    statusEl.className = 'error';
+    return;
+  }
+  
+  const photoFile = photoInput.files[0];
+  if (!photoFile) {
+    statusEl.textContent = '⚠️ Veuillez ajouter une photo';
+    statusEl.className = 'error';
+    return;
+  }
+  
+  if (photoFile.size > 2 * 1024 * 1024) {
+    statusEl.textContent = '⚠️ La photo doit faire moins de 2 MB';
     statusEl.className = 'error';
     return;
   }
   
   submitBtn.disabled = true;
-  submitBtn.textContent = '⏳ Inscription en cours...';
+  submitBtn.textContent = '⏳ Upload photo...';
+  statusEl.textContent = '';
+  
+  let photoUrl = '';
   
   try {
+    // Upload photo
+    const fileName = `partners/${Date.now()}_${photoFile.name.replace(/\s/g, '_')}`;
+    const { data: uploadData, error: uploadError } = await sb.storage
+      .from('public-assets')
+      .upload(fileName, photoFile);
+    
+    if (uploadError) throw uploadError;
+    
+    const { data: urlData } = sb.storage
+      .from('public-assets')
+      .getPublicUrl(fileName);
+    
+    photoUrl = urlData.publicUrl;
+    
+  } catch (err) {
+    console.error('Upload error:', err);
+    statusEl.textContent = '❌ Erreur upload photo: ' + err.message;
+    statusEl.className = 'error';
+    submitBtn.disabled = false;
+    submitBtn.textContent = '🦅 Valider mon inscription';
+    return;
+  }
+  
+  submitBtn.textContent = '⏳ Inscription en cours...';
+  
+  // Déterminer catégorie
+  let category = 'market';
+  if (selectedModule === 'driver') category = 'driver';
+  if (selectedModule === 'resto' || selectedModule === 'resa') category = 'restaurant';
+  if (selectedModule === 'loc') category = 'hebergement';
+  if (selectedModule === 'build') category = 'construction';
+  if (selectedModule === 'jobs') category = 'jobs';
+  if (selectedModule === 'fret_chauffeur') category = 'transport';
+  
+  // Déterminer emoji
+  let emoji = '✨';
+  if (selectedModule === 'driver') emoji = '🚗';
+  if (selectedModule === 'resto' || selectedModule === 'resa') emoji = '🍽️';
+  if (selectedModule === 'loc') emoji = '🏠';
+  if (selectedModule === 'market') emoji = '🛒';
+  if (selectedModule === 'build') emoji = '🏗️';
+  if (selectedModule === 'jobs') emoji = '💼';
+  if (selectedModule === 'fret_chauffeur') emoji = '📦';
+  
+  // Créer ID unique
+  const partnerId = businessName.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+  
+  // Préparer données partenaire complètes
+  const partnerData = {
+    id: partnerId,
+    name: businessName,
+    emoji: emoji,
+    category: category,
+    location: city,
+    address: address,
+    description: description,
+    price: `A partir de ${selectedPrice.toLocaleString('fr-FR')} F/mois`,
+    phone: phone,
+    whatsapp: `https://wa.me/${phone.replace(/\D/g, '')}?text=Salam%20je%20viens%20de%20DIGIYLYFE`,
+    email: email || null,
+    image: photoUrl,
+    gps: {
+      lat: parseFloat(gpsLat) || 14.4574,
+      lng: parseFloat(gpsLng) || -16.9984
+    },
+    services: services,
+    features: features,
+    module: selectedModule,
+    subscription_price: selectedPrice,
+    badge: 'Nouveau partenaire DIGIY',
+    created_at: new Date().toISOString()
+  };
+  
+  try {
+    // Insertion BDD
     const { error } = await sb
       .from('pre_registrations')
       .insert({
@@ -453,10 +771,14 @@ form.addEventListener('submit', async (e) => {
         whatsapp: phone,
         email: email || null,
         country: 'Sénégal',
+        city: city,
+        address: address,
         preferred_module: selectedModule,
         modules: [selectedModule],
         status: 'pre_registered',
-        notes: `Prix: ${selectedPrice} F/mois`,
+        photo_url: photoUrl,
+        partner_data: partnerData,
+        notes: `Prix: ${selectedPrice} F/mois | GPS: ${partnerData.gps.lat},${partnerData.gps.lng}`,
         created_at: new Date().toISOString()
       });
     
@@ -465,8 +787,16 @@ form.addEventListener('submit', async (e) => {
     statusEl.textContent = '✅ Inscription envoyée ! Redirection vers paiement...';
     statusEl.className = 'success';
     
+    // Redirection paiement
+    const params = new URLSearchParams({
+      module: selectedModule,
+      montant: selectedPrice,
+      pro: businessName,
+      id: partnerId
+    });
+    
     setTimeout(() => {
-      window.location.href = `commencer-a-payer.html?module=${selectedModule}&montant=${selectedPrice}&pro=${encodeURIComponent(businessName)}`;
+      window.location.href = `commencer-a-payer.html?${params.toString()}`;
     }, 2000);
     
   } catch (err) {
@@ -474,7 +804,7 @@ form.addEventListener('submit', async (e) => {
     statusEl.textContent = '❌ Erreur : ' + err.message;
     statusEl.className = 'error';
     submitBtn.disabled = false;
-    submitBtn.textContent = '🦅 Rejoindre DIGIY';
+    submitBtn.textContent = '🦅 Valider mon inscription';
   }
 });
 </script>
