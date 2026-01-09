@@ -98,7 +98,7 @@
       box-shadow:0 0 0 2px rgba(250,204,21,0.25);
       background:rgba(15,23,42,0.95);
     }
-    
+
     .hint{
       font-size:12px;color:var(--muted);margin-top:-2px;
       font-weight:600;line-height:1.4;
@@ -116,7 +116,7 @@
       max-width:200px;height:auto;border-radius:8px;
       margin:12px auto 0;display:none;
     }
-    
+
     .remove-photo-btn{
       position:absolute;
       top:10px;
@@ -136,7 +136,7 @@
       background:#dc2626;
       transform:scale(1.05);
     }
-    
+
     .module-option{
       padding:16px;
       background:rgba(15,23,42,0.65);
@@ -177,7 +177,7 @@
       color:var(--muted);
       line-height:1.5;
     }
-    
+
     .price-summary{
       background:rgba(250,204,21,0.12);
       border:2px solid var(--accent);
@@ -223,6 +223,7 @@
     }
   </style>
 
+  <!-- ✅ Un seul include Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
@@ -250,13 +251,13 @@
       </div>
 
       <form id="proForm">
-        
+
         <!-- ÉTAPE 1 : CHOIX MODULE -->
         <div class="section-title">🎯 Ton activité DIGIY (étape 1/3)</div>
 
         <div class="field">
           <label class="required">Sélectionne ton module</label>
-          
+
           <div class="module-option" data-module="driver" data-price="9900" data-type="mobile">
             <div class="module-header">
               <div class="module-name">🚗 DIGIY DRIVER</div>
@@ -322,7 +323,7 @@
           </div>
         </div>
 
-        <!-- ÉTAPE 2 : INFOS DE BASE (s'affiche après sélection) -->
+        <!-- ÉTAPE 2 : INFOS DE BASE -->
         <div id="basicInfo" style="display:none">
           <div class="section-title">📋 Tes informations (étape 2/3)</div>
 
@@ -335,7 +336,7 @@
           <div class="field">
             <label class="required">Téléphone WhatsApp</label>
             <input id="phone" required placeholder="+221 77 123 45 67">
-            <div class="hint">Pour recevoir les commandes directement</div>
+            <div class="hint">Pour recevoir les demandes directement</div>
           </div>
 
           <div class="field">
@@ -344,7 +345,7 @@
           </div>
         </div>
 
-        <!-- ÉTAPE 3 : DÉTAILS BUSINESS (seulement pour activités fixes) -->
+        <!-- ÉTAPE 3 : DÉTAILS BUSINESS (fixe uniquement) -->
         <div id="businessInfo" style="display:none">
           <div class="section-title">🏢 Détails (étape 3/3)</div>
 
@@ -395,16 +396,39 @@
   </div>
 
 <script>
+/* =========================
+   CONFIG DIGIY
+========================= */
 const SUPABASE_CONFIG = {
   url: "https://wesqmwjjtsefyjnluosj.supabase.co",
-  key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA"
+  key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA".split("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.")[1] ? 
+       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA" :
+       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA"
 };
 
-const sb = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key);
+// ✅ Mets ton numéro admin WhatsApp ici (sans +)
+const ADMIN_WA_NUMBER = "221771234567"; // <-- remplace par TON numéro admin
 
+// Mapping module -> plan_code (CORE-friendly)
+const MODULE_PLAN = {
+  driver: { plan_code: "DRIVER_MONTHLY", label: "DRIVER", type: "mobile" },
+  loc:    { plan_code: "LOC_MONTHLY",    label: "LOC",    type: "fixe"   },
+  resto:  { plan_code: "RESTO_MONTHLY",  label: "RESTO",  type: "fixe"   },
+  market: { plan_code: "MARKET_MONTHLY", label: "MARKET", type: "fixe"   },
+  fret:   { plan_code: "FRET_MONTHLY",   label: "FRET",   type: "mobile" },
+  jobs:   { plan_code: "JOBS_MONTHLY",   label: "JOBS",   type: "fixe"   },
+  build:  { plan_code: "BUILD_MONTHLY",  label: "BUILD",  type: "fixe"   },
+  pos:    { plan_code: "POS_MONTHLY",    label: "POS",    type: "fixe"   }
+};
+
+const sb = window.supabase.createClient(SUPABASE_CONFIG.url, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA");
+
+/* =========================
+   UI STATE
+========================= */
 let selectedModule = null;
 let selectedPrice = 0;
-let moduleType = null; // 'mobile' ou 'fixe'
+let moduleType = null;
 
 const moduleOptions = document.querySelectorAll('.module-option');
 const basicInfo = document.getElementById('basicInfo');
@@ -412,43 +436,44 @@ const businessInfo = document.getElementById('businessInfo');
 const submitBtn = document.getElementById('submitBtn');
 const priceSummary = document.getElementById('priceSummary');
 
-// ============================================
-// SÉLECTION MODULE
-// ============================================
+const form = document.getElementById('proForm');
+const statusEl = document.getElementById('status');
+
+function esc(s){ return String(s ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;"); }
+
+/* =========================
+   SÉLECTION MODULE
+========================= */
 moduleOptions.forEach(option => {
   option.addEventListener('click', function() {
     moduleOptions.forEach(o => o.classList.remove('selected'));
     this.classList.add('selected');
-    
+
     selectedModule = this.dataset.module;
-    selectedPrice = parseInt(this.dataset.price);
-    moduleType = this.dataset.type; // 'mobile' ou 'fixe'
-    
-    // Afficher infos de base
+    selectedPrice = parseInt(this.dataset.price, 10) || 0;
+    moduleType = this.dataset.type;
+
     basicInfo.style.display = 'block';
-    
-    // Afficher business info seulement si activité fixe
+
     if (moduleType === 'fixe') {
       businessInfo.style.display = 'block';
     } else {
       businessInfo.style.display = 'none';
     }
-    
-    // Afficher prix et bouton
+
     priceSummary.style.display = 'block';
     document.getElementById('priceAmount').textContent = selectedPrice.toLocaleString('fr-FR') + ' F';
     submitBtn.style.display = 'block';
-    
-    // Scroll vers le bas
+
     setTimeout(() => {
       basicInfo.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
   });
 });
 
-// ============================================
-// GESTION PHOTO (OPTIONNELLE)
-// ============================================
+/* =========================
+   PHOTO (OPTIONNELLE)
+========================= */
 const photoInput = document.getElementById('mainPhoto');
 const photoPreview = document.getElementById('photoPreview');
 const uploadText = document.getElementById('uploadText');
@@ -457,36 +482,37 @@ const removePhotoBtn = document.getElementById('removePhotoBtn');
 
 if (photoUploadZone) {
   photoUploadZone.addEventListener('click', (e) => {
-    if (e.target.id === 'removePhotoBtn') return;
-    photoInput.click();
+    if (e.target && e.target.id === 'removePhotoBtn') return;
+    if (photoInput) photoInput.click();
   });
 }
 
 if (photoInput) {
   photoInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert('⚠️ Photo trop volumineuse ! Max 2 MB.\n\nCompresse-la sur tinypng.com');
-        photoInput.value = '';
-        return;
-      }
-      
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        photoPreview.src = e.target.result;
-        photoPreview.style.display = 'block';
-        removePhotoBtn.style.display = 'block';
-        uploadText.innerHTML = '✅ Photo ajoutée<br><span style="font-size:12px">Clique pour changer</span>';
-      };
-      reader.readAsDataURL(file);
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert('⚠️ Photo trop volumineuse ! Max 2 MB.\n\nCompresse-la sur tinypng.com');
+      photoInput.value = '';
+      return;
     }
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      photoPreview.src = ev.target.result;
+      photoPreview.style.display = 'block';
+      removePhotoBtn.style.display = 'block';
+      uploadText.innerHTML = '✅ Photo ajoutée<br><span style="font-size:12px">Clique pour changer</span>';
+    };
+    reader.readAsDataURL(file);
   });
 }
 
 if (removePhotoBtn) {
   removePhotoBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    if (!photoInput) return;
     photoInput.value = '';
     photoPreview.style.display = 'none';
     photoPreview.src = '';
@@ -495,124 +521,135 @@ if (removePhotoBtn) {
   });
 }
 
-// ============================================
-// SOUMISSION FORMULAIRE
-// ============================================
-const form = document.getElementById('proForm');
-const statusEl = document.getElementById('status');
-
+/* =========================
+   SUBMIT
+========================= */
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  
-  // Validation module
+
   if (!selectedModule) {
-    alert('⚠️ Sélectionne un module d\'abord');
+    alert("⚠️ Sélectionne un module d'abord");
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return;
   }
-  
-  // Récupération champs obligatoires
+
   const businessName = document.getElementById('businessName').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const city = document.getElementById('city').value.trim();
-  
+
   if (!businessName || !phone || !city) {
     alert('⚠️ Remplis tous les champs obligatoires (nom, téléphone, ville)');
     return;
   }
-  
+
+  const plan = MODULE_PLAN[selectedModule] || { plan_code: (selectedModule.toUpperCase() + "_MONTHLY"), label: selectedModule.toUpperCase(), type: moduleType };
+  const moduleLabel = plan.label;
+  const planCode = plan.plan_code;
+
   submitBtn.disabled = true;
   submitBtn.textContent = '⏳ Inscription...';
   statusEl.textContent = '';
-  
+  statusEl.className = '';
+
   let photoUrl = '';
   const photoFile = photoInput ? photoInput.files[0] : null;
-  
+
   // Upload photo (optionnel)
   if (photoFile) {
     submitBtn.textContent = '⏳ Upload photo...';
     try {
-      const fileName = `partners/${Date.now()}_${photoFile.name.replace(/\s/g, '_')}`;
+      const safeName = String(photoFile.name || "photo").replace(/\s/g, '_');
+      const fileName = `partners/${Date.now()}_${safeName}`;
       const { error: uploadError } = await sb.storage
         .from('public-assets')
-        .upload(fileName, photoFile);
-      
+        .upload(fileName, photoFile, { upsert: true });
+
       if (!uploadError) {
-        const { data: urlData } = sb.storage
-          .from('public-assets')
-          .getPublicUrl(fileName);
-        photoUrl = urlData.publicUrl;
+        const { data: urlData } = sb.storage.from('public-assets').getPublicUrl(fileName);
+        photoUrl = urlData?.publicUrl || '';
       }
     } catch (err) {
       console.warn('Photo upload échoué (optionnel):', err);
     }
   }
-  
+
   submitBtn.textContent = '⏳ Enregistrement...';
-  
-  // Préparer données minimales
+
+  const address = document.getElementById('address')?.value.trim();
+  const description = document.getElementById('description')?.value.trim();
+
+  // ✅ Données CORE-friendly (pour l’écran Admin)
   const inscriptionData = {
     full_name: businessName,
     phone: phone,
     whatsapp: phone,
     city: city,
     country: 'Sénégal',
+
     preferred_module: selectedModule,
     modules: [selectedModule],
+
+    // 👇 champs clés pour l’admin & le lien abonnement
+    plan_code: planCode,                 // ex: DRIVER_MONTHLY
+    price_monthly: selectedPrice,        // ex: 9900
+    module_label: moduleLabel,           // ex: DRIVER
+    module_type: moduleType,             // mobile / fixe
+
     status: 'pending_payment',
+    payment_method: 'wave',
     photo_url: photoUrl || null,
-    notes: `Module: ${selectedModule} | Prix: ${selectedPrice} F/mois | Type: ${moduleType}`,
-    created_at: new Date().toISOString()
+
+    notes: `Module: ${selectedModule} | Plan: ${planCode} | Prix: ${selectedPrice} F/mois | Type: ${moduleType}`
   };
-  
-  // Ajouter champs optionnels si remplis
-  const address = document.getElementById('address')?.value.trim();
-  const description = document.getElementById('description')?.value.trim();
-  
+
   if (address) inscriptionData.address = address;
-  
+
   if (moduleType === 'fixe' && (address || description)) {
     inscriptionData.partner_data = {
       description: description || null,
       address: address || null,
       module: selectedModule,
+      plan_code: planCode,
       price: selectedPrice
     };
   }
-  
+
   try {
-    // Insertion en base
     const { data, error } = await sb
       .from('pre_registrations')
-      .insert(inscriptionData)
+      .insert([inscriptionData])
       .select()
       .single();
-    
+
     if (error) throw error;
-    
-    statusEl.textContent = '✅ Inscription OK ! Redirection paiement Wave...';
+
+    statusEl.textContent = '✅ Inscription OK ! Redirection WhatsApp (paiement Wave)...';
     statusEl.className = 'success';
-    
-    // REDIRECTION WAVE DIRECTE
-    const moduleName = selectedModule.toUpperCase().replace('_', ' ');
-    const waveMessage = `Bonjour DIGIY ! Je viens de m'inscrire pour ${moduleName}.
+
+    // ✅ Message WhatsApp admin (paiement Wave)
+    const waMsg =
+`Bonjour DIGIY !
+Je viens de m'inscrire pour ${moduleLabel} (${planCode}).
 
 📋 Infos :
 - Nom : ${businessName}
 - Tel : ${phone}
 - Ville : ${city}
-- Module : ${moduleName}
+- Module : ${moduleLabel}
 - Prix : ${selectedPrice.toLocaleString('fr-FR')} FCFA/mois
 
-Je souhaite activer mon abonnement par Wave. Merci !`;
-    
+🧾 Référence inscription :
+- ID : ${data?.id || "—"}
+
+Je souhaite activer mon abonnement via Wave. Merci !`;
+
     setTimeout(() => {
-      window.location.href = `https://wa.me/221771234567?text=${encodeURIComponent(waveMessage)}`;
-    }, 1500);
-    
+      window.location.href = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
+    }, 900);
+
   } catch (err) {
     console.error(err);
-    statusEl.textContent = '❌ Erreur : ' + err.message;
+    statusEl.textContent = '❌ Erreur : ' + (err?.message || 'inconnue');
     statusEl.className = 'error';
     submitBtn.disabled = false;
     submitBtn.textContent = '🦅 Valider mon inscription';
