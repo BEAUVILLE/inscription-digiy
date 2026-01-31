@@ -122,9 +122,32 @@
       box-shadow:0 0 0 4px rgba(34,197,94,0.15);
     }
     .module-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    .module-name{font-size:16px;font-weight:900;color:var(--text)}
+    .module-name{font-size:16px;font-weight:900;color:var(--text);display:flex;align-items:center;gap:8px}
+    .module-code{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:36px;
+      height:36px;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      color:white;
+      font-size:14px;
+      font-weight:900;
+      border-radius:8px;
+      box-shadow:0 4px 12px rgba(102,126,234,.3);
+    }
     .module-price{font-size:18px;font-weight:900;color:var(--accent)}
     .module-desc{font-size:13px;color:var(--muted);line-height:1.5}
+    .module-note{
+      margin-top:6px;
+      padding:8px 10px;
+      background:rgba(250,204,21,.08);
+      border:1px solid rgba(250,204,21,.25);
+      border-radius:8px;
+      font-size:11px;
+      color:rgba(250,204,21,.95);
+      font-weight:800;
+    }
 
     .price-summary{
       background:rgba(250,204,21,0.12);
@@ -169,9 +192,6 @@
       font-size:13px;
     }
 
-    /* =========================
-       ✅ PATCH WHY (deep link)
-    ========================= */
     .why{
       margin-top:18px;
       padding:14px 14px;
@@ -214,7 +234,7 @@
   <div class="page">
     <div class="topbar">
       <a class="back-btn" href="https://digiylyfe.com">← Retour DIGIY</a>
-      <a class="back-btn" href="#why">Pourquoi s’inscrire ?</a>
+      <a class="back-btn" href="#why">Pourquoi s'inscrire ?</a>
     </div>
 
     <div class="logo">
@@ -228,26 +248,21 @@
         Paiement direct · Tu gardes 100% de tes revenus
       </div>
 
-      <!-- ✅ Message simple si on arrive depuis un guard -->
       <div id="banner" class="banner"></div>
 
       <div class="pill-row">
         <div class="pill">✓ 0% commission</div>
         <div class="pill">✓ Paiement direct</div>
-        <div class="pill">✓ Inscription simple</div>
+        <div class="pill">✓ Tarifs officiels V2</div>
       </div>
 
-      <!-- =========================
-           ✅ WHY SECTION (PATCH)
-           cible: /inscription-digiy/#why
-      ========================== -->
       <div id="why" class="why">
-        <h2>✨ Pourquoi s’inscrire ?</h2>
+        <h2>✨ Pourquoi s'inscrire ?</h2>
         <p>
           Pour te donner une place officielle dans DIGIY : un identifiant clair, un accès pro, et une vitrine stable.
         </p>
         <ul>
-          <li><strong>Slug unique</strong> (ton “nom digital”) : facile à partager, facile à retrouver.</li>
+          <li><strong>Slug unique</strong> (ton "nom digital") : facile à partager, facile à retrouver.</li>
           <li><strong>Activation abonnement</strong> : Wave direct, sans commission, sans ambiguïté.</li>
           <li><strong>Accès au HUB</strong> : tes modules + tes outils, au même endroit.</li>
           <li><strong>Support WhatsApp</strong> : on te suit, on te sécurise, terrain-ready.</li>
@@ -262,71 +277,146 @@
         <div class="section-title">🎯 Ton activité DIGIY</div>
 
         <div class="field">
-          <label class="required">Sélectionne ton module</label>
+          <label class="required">Sélectionne ton module (tarifs officiels V2 🥡)</label>
 
-          <div class="module-option" data-module="driver" data-price="9900" data-type="mobile">
+          <!-- 1 - DRIVER -->
+          <div class="module-option" data-module="driver" data-price="12900" data-code="1">
             <div class="module-header">
-              <div class="module-name">🚗 DIGIY DRIVER</div>
-              <div class="module-price">9,900 F/mois</div>
+              <div class="module-name">
+                <span class="module-code">1</span>
+                <span>🚗 DIGIY DRIVER</span>
+              </div>
+              <div class="module-price">12 900 F/mois</div>
             </div>
-            <div class="module-desc">VTC sans commission · Paiement direct</div>
+            <div class="module-desc">VTC sans commission · Paiement direct · GPS temps réel</div>
           </div>
 
-          <div class="module-option" data-module="resto" data-price="9900" data-type="fixe">
+          <!-- 2 - LOC -->
+          <div class="module-option" data-module="loc" data-price="12900" data-code="2A-2E">
             <div class="module-header">
-              <div class="module-name">🍽️ DIGIY RESTO PRO</div>
-              <div class="module-price">9,900 F/mois</div>
+              <div class="module-name">
+                <span class="module-code">2A-2E</span>
+                <span>🏠 DIGIY LOC</span>
+              </div>
+              <div class="module-price">À partir de 12 900 F/mois</div>
             </div>
-            <div class="module-desc">Réservation · Gestion · Caisse</div>
+            <div class="module-desc">Location courte durée · 0% commission · Gestion logements</div>
+            <div class="module-note">📊 Prix selon nombre de logements (1-5: 12 900 F | 6-9: 25 000 F | 10-20: 45 000 F | 21-30: 60 000 F | 30+: 90 000 F)</div>
           </div>
 
-          <div class="module-option" data-module="market" data-price="12900" data-type="fixe">
+          <!-- 3 - RESTO -->
+          <div class="module-option" data-module="resto" data-price="19900" data-code="3A-3C">
             <div class="module-header">
-              <div class="module-name">🛒 DIGIY MARKET</div>
-              <div class="module-price">12,900 F/mois</div>
+              <div class="module-name">
+                <span class="module-code">3A-3C</span>
+                <span>🍽️ DIGIY RESTO PRO</span>
+              </div>
+              <div class="module-price">À partir de 19 900 F/mois</div>
             </div>
-            <div class="module-desc">Boutique en ligne · Stock</div>
+            <div class="module-desc">Plan de salle · Commandes · KDS · Caisse · Offline</div>
+            <div class="module-note">📊 Prix selon licences (2 lic.: 19 900 F | 4 lic.: 39 900 F | 6 lic.: 59 900 F)</div>
           </div>
 
-          <div class="module-option" data-module="loc" data-price="9900" data-type="fixe">
+          <!-- 4 - RÉSA -->
+          <div class="module-option" data-module="resa" data-price="12900" data-code="4A-4E">
             <div class="module-header">
-              <div class="module-name">🏠 DIGIY LOC</div>
-              <div class="module-price">9,900 F/mois</div>
+              <div class="module-name">
+                <span class="module-code">4A-4E</span>
+                <span>📅 DIGIY RÉSA</span>
+              </div>
+              <div class="module-price">À partir de 12 900 F/mois</div>
             </div>
-            <div class="module-desc">Location directe · 0% commission</div>
+            <div class="module-desc">Réservations · Planning · Rappels auto · Gestion tables</div>
+            <div class="module-note">📊 Prix selon nombre de tables (1-5: 12 900 F | 6-9: 25 000 F | 10-20: 45 000 F | 21-30: 60 000 F | 30+: 90 000 F)</div>
           </div>
 
-          <div class="module-option" data-module="fret" data-price="14900" data-type="mobile">
+          <!-- 5 - POS -->
+          <div class="module-option" data-module="pos" data-price="19900" data-code="5">
             <div class="module-header">
-              <div class="module-name">📦 DIGIY FRET</div>
-              <div class="module-price">14,900 F/mois</div>
+              <div class="module-name">
+                <span class="module-code">5</span>
+                <span>💳 DIGIY POS PRO</span>
+              </div>
+              <div class="module-price">19 900 F/mois</div>
             </div>
-            <div class="module-desc">Livraisons · Transport</div>
+            <div class="module-desc">Caisse pro · Stock · Ventes · Stats · Multi-utilisateurs</div>
           </div>
 
-          <div class="module-option" data-module="jobs" data-price="7900" data-type="fixe">
+          <!-- 6 - MARKET -->
+          <div class="module-option" data-module="market" data-price="19900" data-code="6">
             <div class="module-header">
-              <div class="module-name">💼 DIGIY JOBS</div>
-              <div class="module-price">7,900 F/mois</div>
+              <div class="module-name">
+                <span class="module-code">6</span>
+                <span>🛒 DIGIY MARKET</span>
+              </div>
+              <div class="module-price">19 900 F/mois</div>
             </div>
-            <div class="module-desc">Emploi · Recrutement</div>
+            <div class="module-desc">Boutique en ligne · Catalogue · Commandes · Paiement Wave</div>
           </div>
 
-          <div class="module-option" data-module="build" data-price="9900" data-type="fixe">
+          <!-- 7 - BUILD -->
+          <div class="module-option" data-module="build" data-price="12900" data-code="7">
             <div class="module-header">
-              <div class="module-name">🏗️ DIGIY BUILD</div>
-              <div class="module-price">9,900 F/mois</div>
+              <div class="module-name">
+                <span class="module-code">7</span>
+                <span>🏗️ DIGIY BUILD</span>
+              </div>
+              <div class="module-price">12 900 F/mois</div>
             </div>
-            <div class="module-desc">Services · Devis</div>
+            <div class="module-desc">Artisans · Devis · Chantiers · Portfolio · Avis clients</div>
           </div>
 
-          <div class="module-option" data-module="pos" data-price="9900" data-type="fixe">
+          <!-- 8 - EXPLORE AGENCE -->
+          <div class="module-option" data-module="explore" data-price="30000" data-code="8A-8C">
             <div class="module-header">
-              <div class="module-name">💳 DIGIY POS</div>
-              <div class="module-price">9,900 F/mois</div>
+              <div class="module-name">
+                <span class="module-code">8A-8C</span>
+                <span>🧭 DIGIY EXPLORE AGENCE</span>
+              </div>
+              <div class="module-price">À partir de 30 000 F/mois</div>
             </div>
-            <div class="module-desc">Caisse · Point de vente</div>
+            <div class="module-desc">Programme agences · Visibilité internationale · Leads WhatsApp</div>
+            <div class="module-note">📊 Packs (ESSENTIEL: 30K | PRO: 60K | PREMIUM: 120K) + Droit d'entrée: 150K (offert si annuel)</div>
           </div>
+
+          <!-- 9 - FRET CHAUFFEUR -->
+          <div class="module-option" data-module="fret_driver" data-price="25000" data-code="9A-9D">
+            <div class="module-header">
+              <div class="module-name">
+                <span class="module-code">9A-9D</span>
+                <span>🚚 DIGIY FRET CHAUFFEUR</span>
+              </div>
+              <div class="module-price">À partir de 25 000 F/mois</div>
+            </div>
+            <div class="module-desc">Transport marchandises · Zones · Commandes pro</div>
+            <div class="module-note">📊 Zones (LOCAL <50km: 25K | RÉGIONAL 50-200km: 60K | NATIONAL 200km+: 120K | INTERNATIONAL: 200K)</div>
+          </div>
+
+          <!-- 10 - FRET CLIENT -->
+          <div class="module-option" data-module="fret_client" data-price="9900" data-code="10A-10D">
+            <div class="module-header">
+              <div class="module-name">
+                <span class="module-code">10A-10D</span>
+                <span>📦 DIGIY FRET CLIENT</span>
+              </div>
+              <div class="module-price">À partir de 9 900 F/mois</div>
+            </div>
+            <div class="module-desc">Expéditeurs · Suivi · Paiement mobile</div>
+            <div class="module-note">📊 Zones (LOCAL: 9 900 F | RÉGIONAL: 25K | NATIONAL: 60K | INTERNATIONAL: 120K)</div>
+          </div>
+
+          <!-- JOBS -->
+          <div class="module-option" data-module="jobs" data-price="12900" data-code="Jobs">
+            <div class="module-header">
+              <div class="module-name">
+                <span class="module-code">Jobs</span>
+                <span>💼 DIGIY JOBS</span>
+              </div>
+              <div class="module-price">12 900 F/mois</div>
+            </div>
+            <div class="module-desc">Emploi · Recrutement · Candidatures · Matchs</div>
+          </div>
+
         </div>
 
         <div id="basicInfo" style="display:none">
@@ -348,12 +438,20 @@
             <label class="required">Ville</label>
             <input id="city" required placeholder="Dakar, Saly, Thiès, Mbour...">
           </div>
+
+          <div class="field" id="tierField" style="display:none;">
+            <label class="required">Choisis ton palier</label>
+            <select id="tierSelect">
+              <option value="">-- Sélectionne --</option>
+            </select>
+            <div class="hint" id="tierHint">Le prix sera ajusté selon ton palier</div>
+          </div>
         </div>
 
         <div class="price-summary" id="priceSummary" style="display:none;">
           <div class="price-summary-label">MONTANT MENSUEL</div>
           <div class="price-summary-amount" id="priceAmount">0 F</div>
-          <div style="margin-top:10px;font-size:12px;color:var(--muted)">
+          <div style="margin-top:10px;font-size:12px;color:var(--muted)" id="priceNote">
             Paiement Wave · Sans engagement
           </div>
         </div>
@@ -368,28 +466,63 @@
   </div>
 
 <script>
-/* =========================
-   CONFIG DIGIY (PROPRE)
-========================= */
 const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ✅ TON WhatsApp admin (JB BEAUVILLE) — sans "+"
-const ADMIN_WA_NUMBER = "221771342889";
-
-/* mapping simple */
 const MODULE_PLAN = {
-  driver: { plan_code: "DRIVER_MONTHLY", label: "DRIVER", price: 9900 },
-  loc:    { plan_code: "LOC_MONTHLY",    label: "LOC",    price: 9900 },
-  resto:  { plan_code: "RESTO_MONTHLY",  label: "RESTO",  price: 9900 },
-  market: { plan_code: "MARKET_MONTHLY", label: "MARKET", price: 12900 },
-  fret:   { plan_code: "FRET_MONTHLY",   label: "FRET",   price: 14900 },
-  jobs:   { plan_code: "JOBS_MONTHLY",   label: "JOBS",   price: 7900 },
-  build:  { plan_code: "BUILD_MONTHLY",  label: "BUILD",  price: 9900 },
-  pos:    { plan_code: "POS_MONTHLY",    label: "POS",    price: 9900 }
+  driver: { plan_code: "DRIVER_MONTHLY", label: "DRIVER", price: 12900, code: "1" },
+  loc:    { plan_code: "LOC_MONTHLY",    label: "LOC",    price: 12900, code: "2A", tiers: true },
+  resto:  { plan_code: "RESTO_MONTHLY",  label: "RESTO",  price: 19900, code: "3A", tiers: true },
+  resa:   { plan_code: "RESA_MONTHLY",   label: "RÉSA",   price: 12900, code: "4A", tiers: true },
+  pos:    { plan_code: "POS_MONTHLY",    label: "POS",    price: 19900, code: "5" },
+  market: { plan_code: "MARKET_MONTHLY", label: "MARKET", price: 19900, code: "6" },
+  build:  { plan_code: "BUILD_MONTHLY",  label: "BUILD",  price: 12900, code: "7" },
+  explore:{ plan_code: "EXPLORE_MONTHLY",label: "EXPLORE",price: 30000, code: "8A", tiers: true },
+  fret_driver: { plan_code: "FRET_DRIVER_MONTHLY", label: "FRET CHAUFFEUR", price: 25000, code: "9A", tiers: true },
+  fret_client: { plan_code: "FRET_CLIENT_MONTHLY", label: "FRET CLIENT", price: 9900, code: "10A", tiers: true },
+  jobs:   { plan_code: "JOBS_MONTHLY",   label: "JOBS",   price: 12900, code: "Jobs" }
+};
+
+const TIERS = {
+  loc: [
+    { code: "2A", label: "1-5 logements", price: 12900 },
+    { code: "2B", label: "6-9 logements", price: 25000 },
+    { code: "2C", label: "10-20 logements", price: 45000 },
+    { code: "2D", label: "21-30 logements", price: 60000 },
+    { code: "2E", label: "30+ logements", price: 90000 }
+  ],
+  resto: [
+    { code: "3A", label: "ESSENTIEL (2 licences)", price: 19900 },
+    { code: "3B", label: "STANDARD (4 licences)", price: 39900 },
+    { code: "3C", label: "PRO (6 licences)", price: 59900 }
+  ],
+  resa: [
+    { code: "4A", label: "1-5 tables", price: 12900 },
+    { code: "4B", label: "6-9 tables", price: 25000 },
+    { code: "4C", label: "10-20 tables", price: 45000 },
+    { code: "4D", label: "21-30 tables", price: 60000 },
+    { code: "4E", label: "30+ tables", price: 90000 }
+  ],
+  explore: [
+    { code: "8A", label: "ESSENTIEL", price: 30000 },
+    { code: "8B", label: "PRO", price: 60000 },
+    { code: "8C", label: "PREMIUM", price: 120000 }
+  ],
+  fret_driver: [
+    { code: "9A", label: "LOCAL (<50km)", price: 25000 },
+    { code: "9B", label: "RÉGIONAL (50-200km)", price: 60000 },
+    { code: "9C", label: "NATIONAL (200km+)", price: 120000 },
+    { code: "9D", label: "INTERNATIONAL", price: 200000 }
+  ],
+  fret_client: [
+    { code: "10A", label: "LOCAL", price: 9900 },
+    { code: "10B", label: "RÉGIONAL", price: 25000 },
+    { code: "10C", label: "NATIONAL", price: 60000 },
+    { code: "10D", label: "INTERNATIONAL", price: 120000 }
+  ]
 };
 
 function normPhone(p){
@@ -400,9 +533,6 @@ function normPhone(p){
   return p;
 }
 
-/* =========================
-   PATCH: deep-link #why
-========================= */
 function focusWhy(){
   const why = document.getElementById("why");
   if(!why) return;
@@ -415,20 +545,16 @@ window.addEventListener("hashchange", () => {
   if(location.hash === "#why") focusWhy();
 });
 
-/* =========================
-   PARAMS
-========================= */
 const qs = new URLSearchParams(location.search);
 const reason = qs.get("reason");
 const prePhone = qs.get("phone");
 const preModule = (qs.get("module") || "").toLowerCase();
 
-/* Banner simple */
 const banner = document.getElementById("banner");
 if (reason){
   banner.style.display = "block";
   if (reason === "not_active"){
-    banner.textContent = "⛔ Ton abonnement n’est pas actif. Inscris-toi puis active via Wave.";
+    banner.textContent = "⛔ Ton abonnement n'est pas actif. Inscris-toi puis active via Wave.";
   } else if (reason === "missing_phone"){
     banner.textContent = "📝 Inscription requise pour accéder au module.";
   } else if (reason === "pending_activation"){
@@ -438,17 +564,15 @@ if (reason){
   }
 }
 
-/* Pré-remplissage */
 if (prePhone){
   const el = document.getElementById("phone");
   if (el) el.value = normPhone(prePhone);
 }
 
-/* =========================
-   UI STATE
-========================= */
 let selectedModule = null;
 let selectedPrice = 0;
+let selectedCode = "";
+let selectedTier = null;
 
 const moduleOptions = document.querySelectorAll('.module-option');
 const basicInfo = document.getElementById('basicInfo');
@@ -456,6 +580,32 @@ const submitBtn = document.getElementById('submitBtn');
 const priceSummary = document.getElementById('priceSummary');
 const statusEl = document.getElementById('status');
 const form = document.getElementById('proForm');
+const tierField = document.getElementById('tierField');
+const tierSelect = document.getElementById('tierSelect');
+
+function updatePrice(){
+  const price = selectedTier ? selectedTier.price : selectedPrice;
+  const code = selectedTier ? selectedTier.code : selectedCode;
+  
+  document.getElementById('priceAmount').textContent = price.toLocaleString('fr-FR') + ' F';
+  
+  if(selectedTier){
+    document.getElementById('priceNote').textContent = `Code: ${code} • ${selectedTier.label} • Paiement Wave`;
+  } else {
+    document.getElementById('priceNote').textContent = `Code: ${code} • Paiement Wave · Sans engagement`;
+  }
+}
+
+tierSelect.addEventListener('change', function(){
+  const val = this.value;
+  if(!val || !selectedModule || !TIERS[selectedModule]) return;
+  
+  const tier = TIERS[selectedModule].find(t => t.code === val);
+  if(tier){
+    selectedTier = tier;
+    updatePrice();
+  }
+});
 
 function applyModuleSelection(optionEl){
   moduleOptions.forEach(o => o.classList.remove('selected'));
@@ -463,43 +613,62 @@ function applyModuleSelection(optionEl){
 
   selectedModule = optionEl.dataset.module;
   selectedPrice = parseInt(optionEl.dataset.price, 10) || 0;
+  selectedCode = optionEl.dataset.code || "";
+  selectedTier = null;
+
+  const hasTiers = MODULE_PLAN[selectedModule]?.tiers && TIERS[selectedModule];
+
+  if(hasTiers){
+    tierField.style.display = 'block';
+    tierSelect.innerHTML = '<option value="">-- Sélectionne ton palier --</option>';
+    TIERS[selectedModule].forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t.code;
+      opt.textContent = `${t.code} • ${t.label} • ${t.price.toLocaleString('fr-FR')} F`;
+      tierSelect.appendChild(opt);
+    });
+  } else {
+    tierField.style.display = 'none';
+  }
 
   basicInfo.style.display = 'block';
   priceSummary.style.display = 'block';
-  document.getElementById('priceAmount').textContent =
-    selectedPrice.toLocaleString('fr-FR') + ' F';
+  updatePrice();
   submitBtn.style.display = 'block';
 
   setTimeout(() => basicInfo.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
 }
 
-/* Sélection module */
 moduleOptions.forEach(option => {
   option.addEventListener('click', function() {
     applyModuleSelection(this);
   });
 });
 
-/* ✅ FIX IMPORTANT : auto-sélection APRÈS listeners */
 if (preModule && MODULE_PLAN[preModule]){
   const opt = document.querySelector(`.module-option[data-module="${preModule}"]`);
   if (opt) applyModuleSelection(opt);
 }
 
-/* ✅ Auto-focus WHY si hash présent */
 if (location.hash === "#why"){
   setTimeout(focusWhy, 120);
 }
 
-/* =========================
-   SUBMIT
-========================= */
+// 🔥 SUBMIT AVEC REDIRECTION VERS COMMENCER-A-PAYER
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   if (!selectedModule) {
     alert("⚠️ Sélectionne un module d'abord");
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+
+  const plan = MODULE_PLAN[selectedModule];
+  const hasTiers = plan?.tiers && TIERS[selectedModule];
+
+  if(hasTiers && !selectedTier){
+    alert("⚠️ Sélectionne ton palier");
     return;
   }
 
@@ -513,9 +682,9 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
-  const plan =
-    MODULE_PLAN[selectedModule] ||
-    { plan_code: selectedModule.toUpperCase()+"_MONTHLY", label: selectedModule.toUpperCase(), price: selectedPrice };
+  const finalPrice = selectedTier ? selectedTier.price : selectedPrice;
+  const finalCode = selectedTier ? selectedTier.code : selectedCode;
+  const finalLabel = selectedTier ? `${plan.label} ${selectedTier.label}` : plan.label;
 
   submitBtn.disabled = true;
   submitBtn.textContent = '⏳ Enregistrement...';
@@ -533,13 +702,13 @@ form.addEventListener('submit', async (e) => {
     modules: [selectedModule],
 
     plan_code: plan.plan_code,
-    price_monthly: selectedPrice,
-    module_label: plan.label,
+    price_monthly: finalPrice,
+    module_label: finalLabel,
 
     status: 'pending_payment',
     payment_method: 'wave',
 
-    notes: `Module: ${selectedModule} | Plan: ${plan.plan_code} | Prix: ${selectedPrice} F/mois`
+    notes: `Module: ${selectedModule} | Code: ${finalCode} | Plan: ${plan.plan_code} | Prix: ${finalPrice} F/mois${selectedTier ? ` | Palier: ${selectedTier.label}` : ''}`
   };
 
   try {
@@ -551,28 +720,27 @@ form.addEventListener('submit', async (e) => {
 
     if (error) throw error;
 
+    // ✅ Sauvegarde locale
     localStorage.setItem("digiy_known_pro", "1");
     sessionStorage.setItem("digiy_driver_phone", phone);
     localStorage.setItem("digiy_phone", phone);
 
-    statusEl.textContent = '✅ Inscription OK ! Ouverture WhatsApp (Wave)...';
+    statusEl.textContent = '✅ Inscription OK ! Redirection vers paiement...';
     statusEl.className = 'success';
 
-    const waMsg =
-`Bonjour DIGIY (JB BEAUVILLE) !
-Je viens de m'inscrire pour ${plan.label} (${plan.plan_code}).
-
-📋 Infos :
-- Nom : ${businessName}
-- Tel : ${phone}
-- Ville : ${city}
-- Prix : ${selectedPrice.toLocaleString('fr-FR')} FCFA/mois
-- ID inscription : ${data?.id || "—"}
-
-Je souhaite activer mon abonnement via Wave. Merci !`;
-
+    // 🔥🔥🔥 REDIRECTION VERS COMMENCER-A-PAYER 🔥🔥🔥
     setTimeout(() => {
-      window.location.href = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
+      window.location.href = `https://beauville.github.io/commencer-a-payer/?` + new URLSearchParams({
+        phone: phone,
+        module: selectedModule,
+        code: finalCode,
+        amount: String(finalPrice),
+        name: businessName,
+        city: city,
+        tier: selectedTier ? selectedTier.label : '',
+        inscription_id: data?.id || '',
+        from: 'inscription'
+      }).toString();
     }, 650);
 
   } catch (err) {
