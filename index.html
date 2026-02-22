@@ -217,7 +217,7 @@
     }
     .whyGlow{
       outline:2px solid rgba(250,204,21,.55);
-      box-shadow:0 0 0 6px rgba(250,204,21,.10), 0 18px 50px rgba(0,0,0,.45);
+      box-shadow:0 0 0 6px rgba(250,204,21,.10), 0 18px 50px rgba(0,0,0,0.45);
       transition:all .25s ease;
     }
 
@@ -273,7 +273,6 @@
       </div>
 
       <form id="proForm">
-
         <div class="section-title">🎯 Ton activité DIGIY</div>
 
         <div class="field">
@@ -416,12 +415,11 @@
             </div>
             <div class="module-desc">Emploi · Recrutement · Candidatures · Matchs</div>
           </div>
-
         </div>
 
         <div id="basicInfo" style="display:none">
-          <div id="digiyMediaSlot" style="display:none;margin-top:18px"></div>         
           <div class="section-title">📋 Tes informations</div>
+
           <div class="field">
             <label class="required">Nom / Nom commercial</label>
             <input id="businessName" required placeholder="Ex: Mamadou Diop ou Restaurant Chez Astou">
@@ -448,6 +446,9 @@
           </div>
         </div>
 
+        <!-- ✅ SLOT MEDIA AU BON ENDROIT -->
+        <div id="digiyMediaSlot" style="display:none;margin-top:18px"></div>
+
         <div class="price-summary" id="priceSummary" style="display:none;">
           <div class="price-summary-label">MONTANT MENSUEL</div>
           <div class="price-summary-amount" id="priceAmount">0 F</div>
@@ -464,6 +465,9 @@
       </form>
     </div>
   </div>
+
+  <!-- ✅ Charger l’uploader AVANT l’usage -->
+  <script src="https://media.digiylyfe.com/media/uploader/digiy-media-uploader.js?v=1"></script>
 
 <script>
 const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
@@ -540,7 +544,6 @@ function focusWhy(){
   why.scrollIntoView({ behavior:"smooth", block:"start" });
   setTimeout(()=> why.classList.remove("whyGlow"), 1600);
 }
-
 window.addEventListener("hashchange", () => {
   if(location.hash === "#why") focusWhy();
 });
@@ -586,9 +589,9 @@ const tierSelect = document.getElementById('tierSelect');
 function updatePrice(){
   const price = selectedTier ? selectedTier.price : selectedPrice;
   const code = selectedTier ? selectedTier.code : selectedCode;
-  
+
   document.getElementById('priceAmount').textContent = price.toLocaleString('fr-FR') + ' F';
-  
+
   if(selectedTier){
     document.getElementById('priceNote').textContent = `Code: ${code} • ${selectedTier.label} • Paiement Wave`;
   } else {
@@ -599,13 +602,39 @@ function updatePrice(){
 tierSelect.addEventListener('change', function(){
   const val = this.value;
   if(!val || !selectedModule || !TIERS[selectedModule]) return;
-  
+
   const tier = TIERS[selectedModule].find(t => t.code === val);
   if(tier){
     selectedTier = tier;
     updatePrice();
   }
 });
+
+function mountMediaUploader(){
+  const slot = document.getElementById("digiyMediaSlot");
+  if(!slot) return;
+
+  // On n'affiche que si le module est choisi
+  if(!selectedModule) { slot.style.display = "none"; return; }
+
+  // Si le script n'est pas chargé, on ne casse rien
+  if(!window.DIGIY_MEDIA_UPLOADER){
+    console.warn("DIGIY_MEDIA_UPLOADER non chargé. Vérifie l'URL media/uploader.");
+    slot.style.display = "none";
+    return;
+  }
+
+  slot.style.display = "block";
+  try{
+    window.DIGIY_MEDIA_UPLOADER.mount("#digiyMediaSlot", {
+      module: selectedModule,
+      businessNameInput: "#businessName",
+      onChange: (payload) => { window.__digiy_media_payload = payload; }
+    });
+  }catch(e){
+    console.warn("Media uploader error:", e);
+  }
+}
 
 function applyModuleSelection(optionEl){
   moduleOptions.forEach(o => o.classList.remove('selected'));
@@ -636,6 +665,9 @@ function applyModuleSelection(optionEl){
   updatePrice();
   submitBtn.style.display = 'block';
 
+  // ✅ Mount uploader (safe)
+  mountMediaUploader();
+
   setTimeout(() => basicInfo.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
 }
 
@@ -654,7 +686,7 @@ if (location.hash === "#why"){
   setTimeout(focusWhy, 120);
 }
 
-// 🔥 SUBMIT AVEC REDIRECTION VERS COMMENCER-A-PAYER
+// 🔥 SUBMIT AVEC REDIRECTION VERS COMMENCER-A-PAYER (FIX)
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -691,6 +723,8 @@ form.addEventListener('submit', async (e) => {
   statusEl.textContent = '';
   statusEl.className = '';
 
+  const mediaPayload = window.__digiy_media_payload || null;
+
   const inscriptionData = {
     full_name: businessName,
     phone: phone,
@@ -708,7 +742,10 @@ form.addEventListener('submit', async (e) => {
     status: 'pending_payment',
     payment_method: 'wave',
 
-    notes: `Module: ${selectedModule} | Code: ${finalCode} | Plan: ${plan.plan_code} | Prix: ${finalPrice} F/mois${selectedTier ? ` | Palier: ${selectedTier.label}` : ''}`
+    notes:
+      `Module: ${selectedModule} | Code: ${finalCode} | Plan: ${plan.plan_code} | Prix: ${finalPrice} F/mois` +
+      (selectedTier ? ` | Palier: ${selectedTier.label}` : '') +
+      (mediaPayload ? ` | MEDIA: ${JSON.stringify(mediaPayload)}` : '')
   };
 
   try {
@@ -720,7 +757,6 @@ form.addEventListener('submit', async (e) => {
 
     if (error) throw error;
 
-    // ✅ Sauvegarde locale
     localStorage.setItem("digiy_known_pro", "1");
     sessionStorage.setItem("digiy_driver_phone", phone);
     localStorage.setItem("digiy_phone", phone);
@@ -728,19 +764,20 @@ form.addEventListener('submit', async (e) => {
     statusEl.textContent = '✅ Inscription OK ! Redirection vers paiement...';
     statusEl.className = 'success';
 
-    // 🔥🔥🔥 REDIRECTION VERS COMMENCER-A-PAYER 🔥🔥🔥
     setTimeout(() => {
-      window.location.href = `https://beauville.github.io/commencer-a-payer/ + new URLSearchParams({
-        phone: phone,
-        module: selectedModule,
-        code: finalCode,
-        amount: String(finalPrice),
-        name: businessName,
-        city: city,
-        tier: selectedTier ? selectedTier.label : '',
-        inscription_id: data?.id || '',
-        from: 'inscription'
-      }).toString();
+      window.location.href =
+        "https://beauville.github.io/commencer-a-payer/?" +
+        new URLSearchParams({
+          phone: phone,
+          module: selectedModule,
+          code: finalCode,
+          amount: String(finalPrice),
+          name: businessName,
+          city: city,
+          tier: selectedTier ? selectedTier.label : "",
+          inscription_id: data?.id || "",
+          from: "inscription"
+        }).toString();
     }, 650);
 
   } catch (err) {
@@ -752,9 +789,6 @@ form.addEventListener('submit', async (e) => {
   }
 });
 </script>
-<!-- 🔥 SCRIPT UPLOADER UNIVERSAL -->
-<script src="https://media.digiylyfe.com/media/uploader/digiy-media-uploader.js?v=1"></script>
 
 </body>
 </html>
-
