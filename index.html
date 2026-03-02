@@ -1,3 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>DIGIY — Activer mon module</title>
+  <meta name="theme-color" content="#061b14"/>
+
+  <style>
+    .btn-pro{
+      display:inline-block;
+      padding:18px 30px;
+      border-radius:16px;
+      text-decoration:none;
+      font-weight:900;
+      font-size:18px;
+      background:linear-gradient(135deg,#00853F,#FCD116,#E31B23);
+      color:#0a0e1a;
+      transition:all .25s ease;
+    }
+    .btn-pro:hover{
+      transform:translateY(-6px);
+      box-shadow:0 15px 35px rgba(0,0,0,.5);
+    }
+    .mini{
+      font-size:12px;
+      opacity:.85;
+      margin-top:10px;
+      line-height:1.55;
+      max-width:860px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+  </style>
+</head>
+
+<body>
 <section style="
   padding:100px 20px;
   text-align:center;
@@ -6,78 +43,118 @@
   color:white;
 ">
 
-  <h1 style="
-    font-size:52px;
-    font-weight:900;
-    line-height:1.2;
-    margin-bottom:30px;
-  ">
+  <h1 style="font-size:52px;font-weight:900;line-height:1.2;margin-bottom:30px;">
     <span style="color:#00853F;">FIERTÉ.</span><br>
     <span style="color:#FCD116;">PUISSANCE.</span><br>
     <span style="color:#E31B23;">INDÉPENDANCE.</span>
   </h1>
 
-  <p style="
-    font-size:24px;
-    font-weight:800;
-    max-width:900px;
-    margin:0 auto 50px auto;
-    line-height:1.6;
-  ">
-    Ton activité mérite plus qu’un simple profil noyé dans le cloud.<br><br>
-    Elle mérite sa place dans un écosystème enraciné ici,
-    solide comme un baobab,
-    ouvert sur le monde comme l’océan.
+  <p style="font-size:24px;font-weight:800;max-width:900px;margin:0 auto 40px auto;line-height:1.6;">
+    Ici c’est pas “regarder”.<br><br>
+    Ici c’est <b>ACTIVER</b> et passer à l’action.
   </p>
 
-  <p style="
-    font-size:22px;
-    font-weight:700;
-    margin-bottom:50px;
-  ">
-    Choisis ton module.<br>
-    Engage le partenariat.<br>
-    Active ta vitrine.
+  <p style="font-size:22px;font-weight:800;margin-bottom:18px;">
+    Choisis ton module → on t’envoie dans ton cockpit.
   </p>
 
-  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px;">
-
-    <a href="https://commencer-a-payer.digiylyfe.com/?module=DRIVER" class="btn-pro">DIGIY DRIVER</a>
-    <a href="https://commencer-a-payer.digiylyfe.com/?module=RESTO" class="btn-pro">DIGIY RESTO</a>
-    <a href="https://commencer-a-payer.digiylyfe.com/?module=RESA" class="btn-pro">DIGIY RESA RESTO</a>
-    <a href="https://commencer-a-payer.digiylyfe.com/?module=LOC" class="btn-pro">DIGIY LOC</a>
-    <a href="https://commencer-a-payer.digiylyfe.com/?module=MARKET" class="btn-pro">DIGIY MARKET</a>
-    <a href="https://commencer-a-payer.digiylyfe.com/?module=POS" class="btn-pro">DIGIY CAISSE</a>
-    <a href="https://commencer-a-payer.digiylyfe.com/?module=BUILD" class="btn-pro">DIGIY BUILD</a>
-    <a href="https://commencer-a-payer.digiylyfe.com/?module=JOBS" class="btn-pro">DIGIY JOB</a>
-
+  <div class="mini">
+    Astuce : on te demandera ton téléphone une seule fois (et ça restera mémorisé sur cet appareil) pour t’ouvrir ton espace PRO directement.
   </div>
 
-  <div style="
-    margin-top:60px;
-    font-size:18px;
-    font-weight:600;
-    opacity:.9;
-  ">
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px; margin-top:22px;" id="digiyButtons">
+    <a data-pro="https://pro-driver.digiylyfe.com/" class="btn-pro" href="#">ACTIVER — DIGIY DRIVER</a>
+    <a data-pro="https://pro-resto.digiylyfe.com/"  class="btn-pro" href="#">ACTIVER — DIGIY RESTO</a>
+    <a data-pro="https://pro-resa.digiylyfe.com/"   class="btn-pro" href="#">ACTIVER — DIGIY RESA</a>
+    <a data-pro="https://pro-loc.digiylyfe.com/"    class="btn-pro" href="#">ACTIVER — DIGIY LOC</a>
+    <a data-pro="https://pro-market.digiylyfe.com/" class="btn-pro" href="#">ACTIVER — DIGIY MARKET</a>
+    <a data-pro="https://pos.digiylyfe.com/"        class="btn-pro" href="#">ACTIVER — DIGIY CAISSE</a>
+    <a data-pro="https://pro-build.digiylyfe.com/"  class="btn-pro" href="#">ACTIVER — DIGIY BUILD</a>
+    <a data-pro="https://pro-jobs.digiylyfe.com/"   class="btn-pro" href="#">ACTIVER — DIGIY JOBS</a>
+  </div>
+
+  <div style="margin-top:60px;font-size:18px;font-weight:650;opacity:.92;">
     DIGIY – Enraciné en Afrique. Connecté au monde.
   </div>
-
 </section>
 
-<style>
-.btn-pro{
-  display:inline-block;
-  padding:18px 30px;
-  border-radius:16px;
-  text-decoration:none;
-  font-weight:900;
-  font-size:18px;
-  background:linear-gradient(135deg,#00853F,#FCD116,#E31B23);
-  color:#0a0e1a;
-  transition:all .25s ease;
-}
-.btn-pro:hover{
-  transform:translateY(-6px);
-  box-shadow:0 15px 35px rgba(0,0,0,.5);
-}
-</style>
+<script>
+(function(){
+  function normPhone(p){
+    return String(p||"").replace(/[^\d]/g,"");
+  }
+  function normSlug(s){
+    return String(s||"").trim().toLowerCase()
+      .replace(/\s+/g,"-")
+      .replace(/[^a-z0-9-]/g,"")
+      .replace(/-+/g,"-")
+      .replace(/^-|-$/g,"");
+  }
+
+  // slug par défaut (module-prefix + phone)
+  function defaultSlugFromProUrl(proUrl, phone){
+    const p = normPhone(phone);
+    if(p.length < 9) return "";
+    try{
+      const host = new URL(proUrl).host.toLowerCase();
+      // cas spécial pos
+      if(host.startsWith("pos.")) return "pos-" + p;
+      // pro-driver / pro-loc / etc.
+      const m = host.replace(".digiylyfe.com","").replace("pro-","").replace("pro","").replace("-","").trim();
+      if(host.startsWith("pro-driver")) return "driver-" + p;
+      if(host.startsWith("pro-resto"))  return "resto-" + p;
+      if(host.startsWith("pro-resa"))   return "resa-" + p;
+      if(host.startsWith("pro-loc"))    return "loc-" + p;
+      if(host.startsWith("pro-market")) return "market-" + p;
+      if(host.startsWith("pro-build"))  return "build-" + p;
+      if(host.startsWith("pro-jobs"))   return "jobs-" + p;
+      // fallback générique
+      return "pro-" + p;
+    }catch(_){
+      return "";
+    }
+  }
+
+  function goPro(proUrl){
+    const savedPhone = localStorage.getItem("digiy_phone") || "";
+    const savedSlug  = localStorage.getItem("digiy_slug")  || "";
+
+    const phone = prompt("📱 Ton téléphone (digits) ?", savedPhone);
+    if(phone === null) return;
+
+    const p = normPhone(phone);
+    if(p.length < 9){
+      alert("❌ Téléphone invalide. Exemple: 221771234567");
+      return;
+    }
+
+    const slugDefault = savedSlug || defaultSlugFromProUrl(proUrl, p);
+    const slug = prompt("🏷️ Ton slug (optionnel) ?", slugDefault);
+    if(slug === null) return;
+
+    const s = normSlug(slug);
+
+    localStorage.setItem("digiy_phone", p);
+    if(s) localStorage.setItem("digiy_slug", s);
+
+    const u = new URL(proUrl);
+    // On privilégie slug-first
+    if(s) u.searchParams.set("slug", s);
+    else u.searchParams.set("slug", defaultSlugFromProUrl(proUrl, p));
+
+    location.href = u.toString();
+  }
+
+  document.querySelectorAll("#digiyButtons a[data-pro]").forEach(a=>{
+    const proUrl = a.getAttribute("data-pro");
+    a.href = proUrl;
+    a.addEventListener("click", (e)=>{
+      e.preventDefault();
+      goPro(proUrl);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
