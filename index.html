@@ -3,86 +3,364 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>DIGIY — Activer mon module</title>
+  <title>DIGIY — Activer mon outil</title>
   <meta name="theme-color" content="#061b14"/>
+  <meta name="description" content="Activer un outil DIGIYLYFE : chauffeur, réservation, location, marché, caisse, services ou jobs. Paiement direct, 0% commission." />
 
   <style>
+    :root{
+      --green:#00853F;
+      --gold:#FCD116;
+      --red:#E31B23;
+      --bg:#061b14;
+      --text:#ffffff;
+      --dark:#0a0e1a;
+      --line:rgba(255,255,255,.18);
+      --panel:rgba(6,27,20,.72);
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:#061b14;
+      color:var(--text);
+    }
+
+    a{
+      color:inherit;
+    }
+
+    .top-routes{
+      position:fixed;
+      top:calc(env(safe-area-inset-top, 0px) + 12px);
+      left:calc(env(safe-area-inset-left, 0px) + 12px);
+      right:calc(env(safe-area-inset-right, 0px) + 12px);
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      pointer-events:none;
+    }
+
+    .route-group{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      pointer-events:auto;
+    }
+
+    .route-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      min-height:42px;
+      padding:10px 13px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(6,27,20,.72);
+      color:#fff;
+      text-decoration:none;
+      font-size:13px;
+      font-weight:950;
+      line-height:1;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:0 12px 32px rgba(0,0,0,.28);
+      transition:transform .18s ease, background .18s ease, border-color .18s ease;
+      white-space:nowrap;
+    }
+
+    .route-btn:hover{
+      transform:translateY(-1px);
+      background:rgba(6,27,20,.88);
+      border-color:rgba(252,209,22,.55);
+    }
+
+    .route-btn.main{
+      background:linear-gradient(135deg,var(--green),var(--gold),var(--red));
+      color:#08110d;
+      border-color:rgba(255,255,255,.24);
+    }
+
+    .hero{
+      min-height:100vh;
+      padding:120px 20px 70px;
+      text-align:center;
+      background:
+        linear-gradient(rgba(0,0,0,.62),rgba(0,0,0,.68)),
+        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-inner{
+      width:min(980px,100%);
+      margin:0 auto;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:9px 13px;
+      border-radius:999px;
+      border:1px solid rgba(252,209,22,.35);
+      background:rgba(252,209,22,.10);
+      color:#fff6bf;
+      font-size:13px;
+      font-weight:950;
+      margin-bottom:22px;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    h1{
+      font-size:clamp(38px, 7vw, 62px);
+      font-weight:950;
+      line-height:1.12;
+      margin:0 0 30px;
+      letter-spacing:-.03em;
+    }
+
+    h1 .green{color:var(--green)}
+    h1 .gold{color:var(--gold)}
+    h1 .red{color:var(--red)}
+
+    .lead{
+      font-size:clamp(20px, 3.4vw, 28px);
+      font-weight:850;
+      max-width:900px;
+      margin:0 auto 34px;
+      line-height:1.55;
+    }
+
+    .lead b{
+      color:#fff4aa;
+    }
+
+    .choose{
+      font-size:clamp(18px, 3vw, 23px);
+      font-weight:900;
+      margin:0 auto 16px;
+      line-height:1.45;
+      max-width:860px;
+    }
+
+    .mini{
+      font-size:13px;
+      opacity:.9;
+      margin:10px auto 0;
+      line-height:1.55;
+      max-width:860px;
+      font-weight:650;
+    }
+
+    .hero-routes{
+      margin:24px auto 0;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .hero-route{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:44px;
+      padding:11px 15px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      text-decoration:none;
+      font-size:14px;
+      font-weight:950;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    .buttons{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:18px;
+      margin-top:28px;
+    }
+
     .btn-pro{
-      display:inline-block;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:64px;
       padding:18px 30px;
       border-radius:16px;
       text-decoration:none;
-      font-weight:900;
+      font-weight:950;
       font-size:18px;
-      background:linear-gradient(135deg,#00853F,#FCD116,#E31B23);
-      color:#0a0e1a;
+      background:linear-gradient(135deg,var(--green),var(--gold),var(--red));
+      color:var(--dark);
       transition:all .25s ease;
+      box-shadow:0 12px 26px rgba(0,0,0,.28);
     }
+
     .btn-pro:hover{
-      transform:translateY(-6px);
-      box-shadow:0 15px 35px rgba(0,0,0,.5);
+      transform:translateY(-4px);
+      box-shadow:0 18px 38px rgba(0,0,0,.45);
     }
-    .mini{
-      font-size:12px;
-      opacity:.85;
-      margin-top:10px;
+
+    .btn-pro:active{
+      transform:translateY(0) scale(.98);
+    }
+
+    .signature{
+      margin-top:60px;
+      font-size:18px;
+      font-weight:750;
+      opacity:.94;
       line-height:1.55;
-      max-width:860px;
-      margin-left:auto;
-      margin-right:auto;
+    }
+
+    @media(max-width:720px){
+      .top-routes{
+        align-items:flex-start;
+      }
+
+      .route-group{
+        gap:6px;
+      }
+
+      .route-btn{
+        min-height:40px;
+        padding:9px 11px;
+        font-size:12px;
+      }
+
+      .route-btn .txt{
+        display:none;
+      }
+
+      .hero{
+        padding-top:104px;
+        padding-left:14px;
+        padding-right:14px;
+      }
+
+      .buttons{
+        gap:12px;
+      }
+
+      .btn-pro{
+        width:100%;
+        min-height:58px;
+        padding:16px 18px;
+        font-size:16px;
+      }
+    }
+
+    @media(max-width:420px){
+      .top-routes{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .route-group{
+        width:100%;
+      }
     }
   </style>
 </head>
 
 <body>
-<section style="
-  padding:100px 20px;
-  text-align:center;
-  background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
-  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-  color:white;
-">
+  <nav class="top-routes" aria-label="Navigation DIGIYLYFE">
+    <div class="route-group">
+      <a class="route-btn main" href="https://digiylyfe.com/" rel="noopener">
+        <span aria-hidden="true">🌍</span>
+        <span class="txt">Site</span>
+      </a>
+    </div>
 
-  <h1 style="font-size:52px;font-weight:900;line-height:1.2;margin-bottom:30px;">
-    <span style="color:#00853F;">FIERTÉ.</span><br>
-    <span style="color:#FCD116;">PUISSANCE.</span><br>
-    <span style="color:#E31B23;">INDÉPENDANCE.</span>
-  </h1>
+    <div class="route-group">
+      <a class="route-btn" href="https://digiy-hub.digiylyfe.com/" rel="noopener">
+        <span aria-hidden="true">🧭</span>
+        <span class="txt">HUB</span>
+      </a>
+      <a class="route-btn" href="https://tarifs.digiylyfe.com/" rel="noopener">
+        <span aria-hidden="true">📦</span>
+        <span class="txt">Tarifs</span>
+      </a>
+    </div>
+  </nav>
 
-  <p style="font-size:24px;font-weight:800;max-width:900px;margin:0 auto 40px auto;line-height:1.6;">
-    Ici c’est pas “regarder”.<br><br>
-    Ici c’est <b>ACTIVER</b> et passer à l’action.
-  </p>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="badge">🦅 DIGIYLYFE — 0% commission · paiement direct</div>
 
-  <p style="font-size:22px;font-weight:800;margin-bottom:18px;">
-    Choisis ton module → on t’envoie dans ton cockpit.
-  </p>
+      <h1>
+        <span class="green">FIERTÉ.</span><br>
+        <span class="gold">PUISSANCE.</span><br>
+        <span class="red">INDÉPENDANCE.</span>
+      </h1>
 
-  <div class="mini">
-    Astuce : on te demandera ton téléphone une seule fois (et ça restera mémorisé sur cet appareil) pour t’ouvrir ton espace PRO directement.
-  </div>
+      <p class="lead">
+        Ici ce n’est pas “regarder”.<br><br>
+        Ici c’est <b>ACTIVER</b> et passer à l’action.
+      </p>
 
-  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px; margin-top:22px;" id="digiyButtons">
-    <a data-pro="https://pro-driver.digiylyfe.com/" class="btn-pro" href="#">ACTIVER — DIGIY DRIVER</a>
-    <a data-pro="https://pro-resto.digiylyfe.com/"  class="btn-pro" href="#">ACTIVER — DIGIY RESTO</a>
-    <a data-pro="https://pro-resa.digiylyfe.com/"   class="btn-pro" href="#">ACTIVER — DIGIY RESA</a>
-    <a data-pro="https://pro-loc.digiylyfe.com/"    class="btn-pro" href="#">ACTIVER — DIGIY LOC</a>
-    <a data-pro="https://pro-market.digiylyfe.com/" class="btn-pro" href="#">ACTIVER — DIGIY MARKET</a>
-    <a data-pro="https://pos.digiylyfe.com/"        class="btn-pro" href="#">ACTIVER — DIGIY CAISSE</a>
-    <a data-pro="https://pro-build.digiylyfe.com/"  class="btn-pro" href="#">ACTIVER — DIGIY BUILD</a>
-    <a data-pro="https://pro-jobs.digiylyfe.com/"   class="btn-pro" href="#">ACTIVER — DIGIY JOBS</a>
-  </div>
+      <p class="choose">
+        Choisis ton outil → on t’ouvre ton espace de travail.
+      </p>
 
-  <div style="margin-top:60px;font-size:18px;font-weight:650;opacity:.92;">
-    DIGIY – Enraciné en Afrique. Connecté au monde.
-  </div>
-</section>
+      <div class="mini">
+        Astuce : on te demandera ton téléphone une seule fois. Il restera mémorisé sur cet appareil pour t’ouvrir ton espace plus vite.
+      </div>
+
+      <div class="hero-routes" aria-label="Liens utiles DIGIYLYFE">
+        <a class="hero-route" href="https://digiylyfe.com/" rel="noopener">🌍 Site DIGIYLYFE</a>
+        <a class="hero-route" href="https://digiy-hub.digiylyfe.com/" rel="noopener">🧭 HUB DIGIY</a>
+        <a class="hero-route" href="https://tarifs.digiylyfe.com/" rel="noopener">📦 Tarifs</a>
+      </div>
+
+      <div class="buttons" id="digiyButtons">
+        <a data-pro="https://pro-driver.digiylyfe.com/" class="btn-pro" href="#">ACTIVER — JE CONDUIS</a>
+        <a data-pro="https://pro-resto.digiylyfe.com/"  class="btn-pro" href="#">ACTIVER — MON RESTO</a>
+        <a data-pro="https://pro-resa.digiylyfe.com/"   class="btn-pro" href="#">ACTIVER — JE RÉSERVE</a>
+        <a data-pro="https://pro-loc.digiylyfe.com/"    class="btn-pro" href="#">ACTIVER — JE LOUE</a>
+        <a data-pro="https://pro-market.digiylyfe.com/" class="btn-pro" href="#">ACTIVER — JE VENDS</a>
+        <a data-pro="https://pos.digiylyfe.com/"        class="btn-pro" href="#">ACTIVER — MON COMMERCE</a>
+        <a data-pro="https://pro-build.digiylyfe.com/"  class="btn-pro" href="#">ACTIVER — MES SERVICES</a>
+        <a data-pro="https://pro-jobs.digiylyfe.com/"   class="btn-pro" href="#">ACTIVER — TRAVAIL</a>
+      </div>
+
+      <div class="signature">
+        DIGIY — Enraciné en Afrique. Connecté au monde.
+      </div>
+    </div>
+  </section>
 
 <script>
 (function(){
   function normPhone(p){
     return String(p||"").replace(/[^\d]/g,"");
   }
+
   function normSlug(s){
     return String(s||"").trim().toLowerCase()
       .replace(/\s+/g,"-")
@@ -91,16 +369,14 @@
       .replace(/^-|-$/g,"");
   }
 
-  // slug par défaut (module-prefix + phone)
   function defaultSlugFromProUrl(proUrl, phone){
     const p = normPhone(phone);
     if(p.length < 9) return "";
+
     try{
       const host = new URL(proUrl).host.toLowerCase();
-      // cas spécial pos
+
       if(host.startsWith("pos.")) return "pos-" + p;
-      // pro-driver / pro-loc / etc.
-      const m = host.replace(".digiylyfe.com","").replace("pro-","").replace("pro","").replace("-","").trim();
       if(host.startsWith("pro-driver")) return "driver-" + p;
       if(host.startsWith("pro-resto"))  return "resto-" + p;
       if(host.startsWith("pro-resa"))   return "resa-" + p;
@@ -108,7 +384,7 @@
       if(host.startsWith("pro-market")) return "market-" + p;
       if(host.startsWith("pro-build"))  return "build-" + p;
       if(host.startsWith("pro-jobs"))   return "jobs-" + p;
-      // fallback générique
+
       return "pro-" + p;
     }catch(_){
       return "";
@@ -119,17 +395,17 @@
     const savedPhone = localStorage.getItem("digiy_phone") || "";
     const savedSlug  = localStorage.getItem("digiy_slug")  || "";
 
-    const phone = prompt("📱 Ton téléphone (digits) ?", savedPhone);
+    const phone = prompt("📱 Ton téléphone ?", savedPhone);
     if(phone === null) return;
 
     const p = normPhone(phone);
     if(p.length < 9){
-      alert("❌ Téléphone invalide. Exemple: 221771234567");
+      alert("❌ Téléphone invalide. Exemple : 221771234567");
       return;
     }
 
     const slugDefault = savedSlug || defaultSlugFromProUrl(proUrl, p);
-    const slug = prompt("🏷️ Ton slug (optionnel) ?", slugDefault);
+    const slug = prompt("🏷️ Ton accès, si tu l’as déjà ?", slugDefault);
     if(slug === null) return;
 
     const s = normSlug(slug);
@@ -138,7 +414,7 @@
     if(s) localStorage.setItem("digiy_slug", s);
 
     const u = new URL(proUrl);
-    // On privilégie slug-first
+
     if(s) u.searchParams.set("slug", s);
     else u.searchParams.set("slug", defaultSlugFromProUrl(proUrl, p));
 
@@ -158,3 +434,4 @@
 
 </body>
 </html>
+
