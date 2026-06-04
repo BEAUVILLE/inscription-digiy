@@ -1,437 +1,996 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>DIGIY — Activer mon outil</title>
-  <meta name="theme-color" content="#061b14"/>
-  <meta name="description" content="Activer un outil DIGIYLYFE : chauffeur, réservation, location, marché, caisse, services ou jobs. Paiement direct, 0% commission." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f7efd9" />
+  <meta name="robots" content="index,follow" />
+  <meta name="description" content="FIERTÉ. PUISSANCE. INDÉPENDANCE. Article manifeste DIGIYLYFE : le terrain garde son client, son argent, son nom et sa relation. DIGIYLYFE se conduit à la voix et à l’image." />
+  <meta name="digiy-version" content="article-fierte-puissance-independance-voix-image-20260604" />
+  <meta name="digiy-image-version" content="article-fierte-image-originale-20260604" />
+  <meta name="digiy-color-version" content="article-fierte-drapeau-senegal-20260604" />
+  <title>FIERTÉ · PUISSANCE · INDÉPENDANCE — DIGIYLYFE</title>
 
   <style>
-    :root{
+:root{
+      --page:#061b14;
+      --page2:#0b3d2e;
+      --ink:#f8fafc;
+      --muted:rgba(248,250,252,.84);
+      --soft:rgba(255,255,255,.06);
+      --white:#ffffff;
+      --line:rgba(255,255,255,.16);
       --green:#00853F;
       --gold:#FCD116;
       --red:#E31B23;
-      --bg:#061b14;
-      --text:#ffffff;
-      --dark:#0a0e1a;
-      --line:rgba(255,255,255,.18);
-      --panel:rgba(6,27,20,.72);
+      --shadow:0 18px 46px rgba(0,0,0,.28);
+      --max:980px;
     }
 
-    *{
-      box-sizing:border-box;
-    }
-
-    html{
-      scroll-behavior:smooth;
-    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
 
     body{
       margin:0;
       min-height:100vh;
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      background:#061b14;
-      color:var(--text);
+      background:
+        radial-gradient(900px 520px at 8% -8%,rgba(252,209,22,.18),transparent 58%),
+        radial-gradient(900px 520px at 105% 0%,rgba(227,27,35,.14),transparent 55%),
+        linear-gradient(180deg,var(--page),var(--page2));
+      color:var(--ink);
+      font-size:18px;
+      font-weight:800;
+      line-height:1.65;
+      padding-bottom:96px;
     }
 
-    a{
-      color:inherit;
+    a{color:inherit;text-decoration:none}
+
+    .wrap{
+      width:min(var(--max),calc(100% - 28px));
+      margin:0 auto;
     }
 
-    .top-routes{
-      position:fixed;
-      top:calc(env(safe-area-inset-top, 0px) + 12px);
-      left:calc(env(safe-area-inset-left, 0px) + 12px);
-      right:calc(env(safe-area-inset-right, 0px) + 12px);
-      z-index:9999;
+    .top{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(6,27,20,.90);
+      border-bottom:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      box-shadow:0 8px 20px rgba(0,0,0,.20);
+    }
+
+    .topIn{
+      min-height:72px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:10px;
-      pointer-events:none;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:10px 0;
     }
 
-    .route-group{
+    .brand{
       display:flex;
       align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
-      pointer-events:auto;
+      gap:12px;
+      font-weight:1000;
     }
 
-    .route-btn{
+    .logo{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--green),var(--gold),var(--red));
+      color:#08110d;
+      font-size:26px;
+      box-shadow:0 12px 28px rgba(0,0,0,.24);
+    }
+
+    .brand strong{
+      display:block;
+      font-size:17px;
+      line-height:1.1;
+      color:#fff;
+    }
+
+    .brand span{
+      display:block;
+      color:#d8e2dc;
+      font-size:12px;
+      margin-top:3px;
+      font-weight:850;
+    }
+
+    .nav{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .btn,
+    button{
+      min-height:48px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.07);
+      color:#fff;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:7px;
-      min-height:42px;
-      padding:10px 13px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(6,27,20,.72);
-      color:#fff;
-      text-decoration:none;
-      font-size:13px;
-      font-weight:950;
-      line-height:1;
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      box-shadow:0 12px 32px rgba(0,0,0,.28);
-      transition:transform .18s ease, background .18s ease, border-color .18s ease;
-      white-space:nowrap;
-    }
-
-    .route-btn:hover{
-      transform:translateY(-1px);
-      background:rgba(6,27,20,.88);
-      border-color:rgba(252,209,22,.55);
-    }
-
-    .route-btn.main{
-      background:linear-gradient(135deg,var(--green),var(--gold),var(--red));
-      color:#08110d;
-      border-color:rgba(255,255,255,.24);
-    }
-
-    .hero{
-      min-height:100vh;
-      padding:120px 20px 70px;
+      gap:8px;
+      padding:0 15px;
+      font:inherit;
+      font-size:14px;
+      font-weight:1000;
+      cursor:pointer;
       text-align:center;
-      background:
-        linear-gradient(rgba(0,0,0,.62),rgba(0,0,0,.68)),
-        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-      color:white;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      box-shadow:0 10px 22px rgba(0,0,0,.12);
     }
 
-    .hero-inner{
-      width:min(980px,100%);
-      margin:0 auto;
+    .btn.gold,
+    button.gold{
+      background:var(--gold);
+      color:#123c2d;
+      border-color:transparent;
     }
+
+    .btn.green,
+    button.green{
+      background:var(--green);
+      color:#fff;
+      border-color:transparent;
+    }
+
+    .hero{padding:30px 0 18px}
+
+    .heroCard{
+      border-radius:32px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(6,27,20,.86);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .heroVisual{
+      min-height:420px;
+      display:grid;
+      place-items:center;
+      padding:38px 20px;
+      background:
+        linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.58)),
+        linear-gradient(90deg,rgba(0,133,63,.20),rgba(252,209,22,.12),rgba(227,27,35,.20)),
+        url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop") center/cover no-repeat;
+      color:white;
+      text-align:center;
+      position:relative;
+      isolation:isolate;
+    }
+
+    .heroVisual:before{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:28px;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    .heroVisual .bigWords{
+      position:relative;
+      z-index:2;
+      display:grid;
+      gap:8px;
+      font-size:clamp(46px,9vw,96px);
+      line-height:.86;
+      font-weight:1000;
+      letter-spacing:-.075em;
+      text-transform:uppercase;
+      text-shadow:0 10px 34px rgba(0,0,0,.54);
+    }
+
+    .word1{color:var(--green)}
+    .word2{color:var(--gold)}
+    .word3{color:var(--red)}
+
+    .heroText{padding:26px}
 
     .badge{
       display:inline-flex;
       align-items:center;
-      justify-content:center;
       gap:8px;
-      padding:9px 13px;
       border-radius:999px;
-      border:1px solid rgba(252,209,22,.35);
-      background:rgba(252,209,22,.10);
-      color:#fff6bf;
-      font-size:13px;
-      font-weight:950;
-      margin-bottom:22px;
-      backdrop-filter:blur(10px);
-      -webkit-backdrop-filter:blur(10px);
+      padding:8px 12px;
+      background:rgba(0,133,63,.18);
+      border:1px solid rgba(0,133,63,.35);
+      color:#d1fae5;
+      font-size:12px;
+      font-weight:1000;
+      letter-spacing:.08em;
+      text-transform:uppercase;
     }
 
     h1{
-      font-size:clamp(38px, 7vw, 62px);
-      font-weight:950;
-      line-height:1.12;
-      margin:0 0 30px;
-      letter-spacing:-.03em;
+      margin:16px 0 10px;
+      font-size:clamp(34px,7vw,68px);
+      line-height:.96;
+      letter-spacing:-.06em;
+      color:#fff;
     }
-
-    h1 .green{color:var(--green)}
-    h1 .gold{color:var(--gold)}
-    h1 .red{color:var(--red)}
 
     .lead{
-      font-size:clamp(20px, 3.4vw, 28px);
+      margin:14px 0 0;
+      color:rgba(255,255,255,.84);
+      font-size:clamp(18px,3.6vw,23px);
+      line-height:1.55;
       font-weight:850;
-      max-width:900px;
-      margin:0 auto 34px;
-      line-height:1.55;
+      max-width:68ch;
     }
 
-    .lead b{
-      color:#fff4aa;
+    .reader{
+      margin-top:18px;
+      border:1px solid rgba(252,209,22,.28);
+      border-radius:24px;
+      background:linear-gradient(135deg,rgba(252,209,22,.16),rgba(255,255,255,.04));
+      padding:16px;
+      display:grid;
+      gap:12px;
     }
 
-    .choose{
-      font-size:clamp(18px, 3vw, 23px);
-      font-weight:900;
-      margin:0 auto 16px;
-      line-height:1.45;
-      max-width:860px;
-    }
-
-    .mini{
-      font-size:13px;
-      opacity:.9;
-      margin:10px auto 0;
-      line-height:1.55;
-      max-width:860px;
-      font-weight:650;
-    }
-
-    .hero-routes{
-      margin:24px auto 0;
+    .readerTitle{
       display:flex;
-      justify-content:center;
       align-items:center;
-      flex-wrap:wrap;
+      justify-content:space-between;
       gap:10px;
-    }
-
-    .hero-route{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      min-height:44px;
-      padding:11px 15px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(255,255,255,.08);
-      color:#fff;
-      text-decoration:none;
-      font-size:14px;
-      font-weight:950;
-      backdrop-filter:blur(10px);
-      -webkit-backdrop-filter:blur(10px);
-    }
-
-    .buttons{
-      display:flex;
       flex-wrap:wrap;
-      justify-content:center;
-      gap:18px;
-      margin-top:28px;
     }
 
-    .btn-pro{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:64px;
-      padding:18px 30px;
-      border-radius:16px;
-      text-decoration:none;
-      font-weight:950;
-      font-size:18px;
+    .readerTitle strong{
+      font-size:20px;
+      color:#fff3bf;
+      font-weight:1000;
+    }
+
+    .readerTitle span{
+      color:#e5e7eb;
+      font-size:13px;
+      font-weight:850;
+    }
+
+    .readerActions{
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+    }
+
+    .progressWrap{
+      height:6px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      overflow:hidden;
+      display:none;
+    }
+
+    .progressBar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--green),var(--gold),var(--red));
+      transition:width .16s linear;
+    }
+
+    main.article{
+      display:grid;
+      gap:16px;
+      padding:4px 0 30px;
+    }
+
+    .section{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:26px;
+      background:rgba(6,27,20,.74);
+      box-shadow:0 12px 28px rgba(0,0,0,.14);
+      padding:22px;
+    }
+
+    .section h2{
+      margin:0 0 12px;
+      font-size:clamp(26px,5vw,42px);
+      line-height:1;
+      letter-spacing:-.045em;
+      color:#fff;
+    }
+
+    .section p{
+      margin:12px 0 0;
+      color:rgba(255,255,255,.84);
+      font-weight:800;
+    }
+
+    .quote{
+      border-left:6px solid var(--gold);
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(252,209,22,.12);
+      color:#fff3bf;
+      font-size:clamp(19px,4vw,28px);
+      line-height:1.25;
+      font-weight:1000;
+      margin:16px 0 0;
+    }
+
+    .triad{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .triadCard{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:22px;
+      background:rgba(255,255,255,.05);
+      padding:18px;
+    }
+
+    .triadCard .ico{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
       background:linear-gradient(135deg,var(--green),var(--gold),var(--red));
-      color:var(--dark);
-      transition:all .25s ease;
-      box-shadow:0 12px 26px rgba(0,0,0,.28);
+      color:#08110d;
+      font-size:25px;
+      font-weight:1000;
+      margin-bottom:12px;
     }
 
-    .btn-pro:hover{
-      transform:translateY(-4px);
-      box-shadow:0 18px 38px rgba(0,0,0,.45);
+    .triadCard strong{
+      display:block;
+      color:#fff;
+      font-size:21px;
+      font-weight:1000;
+      line-height:1.08;
     }
 
-    .btn-pro:active{
-      transform:translateY(0) scale(.98);
-    }
-
-    .signature{
-      margin-top:60px;
-      font-size:18px;
-      font-weight:750;
-      opacity:.94;
+    .triadCard span{
+      display:block;
+      margin-top:8px;
+      color:rgba(255,255,255,.82);
+      font-size:15px;
       line-height:1.55;
     }
 
-    @media(max-width:720px){
-      .top-routes{
-        align-items:flex-start;
-      }
-
-      .route-group{
-        gap:6px;
-      }
-
-      .route-btn{
-        min-height:40px;
-        padding:9px 11px;
-        font-size:12px;
-      }
-
-      .route-btn .txt{
-        display:none;
-      }
-
-      .hero{
-        padding-top:104px;
-        padding-left:14px;
-        padding-right:14px;
-      }
-
-      .buttons{
-        gap:12px;
-      }
-
-      .btn-pro{
-        width:100%;
-        min-height:58px;
-        padding:16px 18px;
-        font-size:16px;
-      }
+    .visualPanel{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+      margin-top:18px;
     }
 
-    @media(max-width:420px){
-      .top-routes{
-        flex-direction:column;
-        align-items:flex-start;
-      }
+    .visualBox{
+      min-height:220px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(circle at 30% 20%,rgba(252,209,22,.20),transparent 30%),
+        linear-gradient(135deg,#0b3d2e,var(--green));
+      color:white;
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      box-shadow:0 18px 34px rgba(0,0,0,.16);
+    }
 
-      .route-group{
-        width:100%;
+    .visualBox.light{
+      background:
+        radial-gradient(circle at 25% 20%,rgba(255,255,255,.16),transparent 30%),
+        linear-gradient(135deg,#8b1118,var(--red));
+      color:#fff;
+    }
+
+    .visualIcon{font-size:54px;line-height:1}
+
+    .visualBox strong{
+      display:block;
+      font-size:32px;
+      line-height:.98;
+      letter-spacing:-.04em;
+      font-weight:1000;
+      margin-top:14px;
+    }
+
+    .visualBox span{
+      display:block;
+      font-size:15px;
+      line-height:1.5;
+      font-weight:850;
+      opacity:.94;
+      margin-top:10px;
+    }
+
+    .steps{
+      display:grid;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .step{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:12px;
+      align-items:start;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:18px;
+      background:rgba(255,255,255,.05);
+      padding:14px;
+    }
+
+    .num{
+      width:38px;
+      height:38px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--green),var(--gold),var(--red));
+      color:#08110d;
+      font-weight:1000;
+    }
+
+    .step strong{
+      display:block;
+      color:#fff;
+      font-weight:1000;
+    }
+
+    .step span{
+      color:rgba(255,255,255,.82);
+      font-size:15px;
+      line-height:1.55;
+      display:block;
+      margin-top:3px;
+    }
+
+    .formula{
+      border-radius:28px;
+      background:linear-gradient(135deg,var(--green),#0b3d2e,var(--red));
+      color:white;
+      padding:24px;
+      text-align:center;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.12);
+    }
+
+    .formula h2{
+      margin:0;
+      font-size:clamp(30px,6vw,54px);
+      line-height:.98;
+      letter-spacing:-.055em;
+      color:#fff;
+    }
+
+    .formula p{
+      color:rgba(255,255,255,.88);
+      max-width:65ch;
+      margin:14px auto 0;
+    }
+
+    .bottomCta{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:18px;
+    }
+
+    .audioFloat{
+      position:fixed;
+      right:14px;
+      bottom:calc(14px + env(safe-area-inset-bottom,0px));
+      z-index:80;
+      min-height:58px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--green),var(--gold),var(--red));
+      color:#08110d;
+      border:0;
+      padding:0 18px;
+      box-shadow:0 16px 34px rgba(0,0,0,.24);
+    }
+
+    .footer{
+      text-align:center;
+      color:rgba(255,255,255,.78);
+      padding:24px 0 34px;
+      font-size:14px;
+      font-weight:850;
+    }
+
+    @media(max-width:760px){
+      .topIn{align-items:flex-start}
+      .nav{width:100%}
+      .nav .btn{flex:1}
+      .heroText,.section{padding:18px}
+      .triad,.visualPanel{grid-template-columns:1fr}
+      .readerActions{
+        display:grid;
+        grid-template-columns:1fr;
       }
+      .readerActions .btn,
+      .readerActions button{width:100%}
+      .audioFloat{
+        left:12px;
+        right:12px;
+        border-radius:18px;
+      }
+      .bottomCta .btn{width:100%}
     }
   </style>
 </head>
 
 <body>
-  <nav class="top-routes" aria-label="Navigation DIGIYLYFE">
-    <div class="route-group">
-      <a class="route-btn main" href="https://digiylyfe.com/" rel="noopener">
-        <span aria-hidden="true">🌍</span>
-        <span class="txt">Site</span>
+  <header class="top">
+    <div class="wrap topIn">
+      <a class="brand" href="https://digiylyfe.com/">
+        <span class="logo">∞</span>
+        <span>
+          <strong>DIGIYLYFE</strong>
+          <span>Article manifeste · voix · image · terrain</span>
+        </span>
       </a>
-    </div>
 
-    <div class="route-group">
-      <a class="route-btn" href="https://digiy-hub.digiylyfe.com/" rel="noopener">
-        <span aria-hidden="true">🧭</span>
-        <span class="txt">HUB</span>
-      </a>
-      <a class="route-btn" href="https://tarifs.digiylyfe.com/" rel="noopener">
-        <span aria-hidden="true">📦</span>
-        <span class="txt">Tarifs</span>
-      </a>
+      <nav class="nav" aria-label="Navigation DIGIY">
+        <a class="btn" href="https://digiylyfe.com/">🌍 Site</a>
+        <a class="btn" href="https://digiy-hub.digiylyfe.com/">🧭 HUB</a>
+        <a class="btn gold" href="#article">Lire</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
   <section class="hero">
-    <div class="hero-inner">
-      <div class="badge">🦅 DIGIYLYFE — 0% commission · paiement direct</div>
+    <div class="wrap">
+      <article class="heroCard">
+        <div class="heroVisual" aria-label="FIERTÉ PUISSANCE INDÉPENDANCE">
+          <div class="bigWords">
+            <span class="word1">Fierté.</span>
+            <span class="word2">Puissance.</span>
+            <span class="word3">Indépendance.</span>
+          </div>
+        </div>
 
-      <h1>
-        <span class="green">FIERTÉ.</span><br>
-        <span class="gold">PUISSANCE.</span><br>
-        <span class="red">INDÉPENDANCE.</span>
-      </h1>
+        <div class="heroText">
+          <span class="badge">🦅 DIGIYLYFE · Le terrain garde la main</span>
+          <h1>Quand le terrain n’attend plus qu’on lui donne la permission</h1>
+          <p class="lead">
+            L’ancien écran disait déjà l’essentiel : FIERTÉ, PUISSANCE, INDÉPENDANCE.
+            Aujourd’hui, DIGIYLYFE transforme cette braise en architecture claire :
+            des modules, une voix, une image, un QR, un paiement direct et une relation protégée.
+          </p>
 
-      <p class="lead">
-        Ici ce n’est pas “regarder”.<br><br>
-        Ici c’est <b>ACTIVER</b> et passer à l’action.
-      </p>
+          <div class="reader" id="reader">
+            <div class="readerTitle">
+              <div>
+                <strong>🎧 Lecteur de l’article</strong><br>
+                <span>Le texte reste visible. L’audio accompagne, il ne remplace pas la lecture.</span>
+              </div>
+            </div>
 
-      <p class="choose">
-        Choisis ton outil → on t’ouvre ton espace de travail.
-      </p>
+            <div class="readerActions">
+              <button class="gold" id="readArticle" type="button">🎧 Écouter l’article</button>
+              <button id="pauseArticle" type="button">⏸ Pause</button>
+              <button id="stopArticle" type="button">⏹ Stop</button>
+            </div>
 
-      <div class="mini">
-        Astuce : on te demandera ton téléphone une seule fois. Il restera mémorisé sur cet appareil pour t’ouvrir ton espace plus vite.
-      </div>
-
-      <div class="hero-routes" aria-label="Liens utiles DIGIYLYFE">
-        <a class="hero-route" href="https://digiylyfe.com/" rel="noopener">🌍 Site DIGIYLYFE</a>
-        <a class="hero-route" href="https://digiy-hub.digiylyfe.com/" rel="noopener">🧭 HUB DIGIY</a>
-        <a class="hero-route" href="https://tarifs.digiylyfe.com/" rel="noopener">📦 Tarifs</a>
-      </div>
-
-      <div class="buttons" id="digiyButtons">
-        <a data-pro="https://pro-driver.digiylyfe.com/" class="btn-pro" href="#">ACTIVER — JE CONDUIS</a>
-        <a data-pro="https://pro-resto.digiylyfe.com/"  class="btn-pro" href="#">ACTIVER — MON RESTO</a>
-        <a data-pro="https://pro-resa.digiylyfe.com/"   class="btn-pro" href="#">ACTIVER — JE RÉSERVE</a>
-        <a data-pro="https://pro-loc.digiylyfe.com/"    class="btn-pro" href="#">ACTIVER — JE LOUE</a>
-        <a data-pro="https://pro-market.digiylyfe.com/" class="btn-pro" href="#">ACTIVER — JE VENDS</a>
-        <a data-pro="https://pos.digiylyfe.com/"        class="btn-pro" href="#">ACTIVER — MON COMMERCE</a>
-        <a data-pro="https://pro-build.digiylyfe.com/"  class="btn-pro" href="#">ACTIVER — MES SERVICES</a>
-        <a data-pro="https://pro-jobs.digiylyfe.com/"   class="btn-pro" href="#">ACTIVER — TRAVAIL</a>
-      </div>
-
-      <div class="signature">
-        DIGIY — Enraciné en Afrique. Connecté au monde.
-      </div>
+            <div class="progressWrap" id="progressWrap" aria-hidden="true">
+              <div class="progressBar" id="progressBar"></div>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 
-<script>
-(function(){
-  function normPhone(p){
-    return String(p||"").replace(/[^\d]/g,"");
-  }
+  <main class="wrap article" id="article">
+    <section class="section">
+      <h2>Il y a des pages qui gardent une braise</h2>
+      <p>
+        Il y a des pages qui vieillissent mal. Et il y a des pages qui gardent une force.
+        L’ancien écran DIGIY disait simplement : FIERTÉ. PUISSANCE. INDÉPENDANCE.
+      </p>
+      <p>
+        Ce n’était pas seulement un slogan. C’était une direction.
+        Derrière ces trois mots, il y avait déjà l’intuition de DIGIYLYFE :
+        ne pas enfermer le professionnel du terrain dans une plateforme qui prend son client,
+        son nom, son argent ou sa relation.
+      </p>
+      <div class="quote">
+        Le terrain n’a pas besoin d’être capturé. Il a besoin d’être équipé.
+      </div>
+    </section>
 
-  function normSlug(s){
-    return String(s||"").trim().toLowerCase()
-      .replace(/\s+/g,"-")
-      .replace(/[^a-z0-9-]/g,"")
-      .replace(/-+/g,"-")
-      .replace(/^-|-$/g,"");
-  }
+    <section class="section">
+      <h2>Fierté, puissance, indépendance</h2>
+      <p>
+        Ces trois mots ne sont pas décoratifs. Ils décrivent le passage d’un professionnel invisible
+        vers un professionnel présenté, joignable, crédible et organisé.
+      </p>
 
-  function defaultSlugFromProUrl(proUrl, phone){
-    const p = normPhone(phone);
-    if(p.length < 9) return "";
+      <div class="triad">
+        <div class="triadCard">
+          <div class="ico">👑</div>
+          <strong>Fierté</strong>
+          <span>Un nom, un métier, une fiche, un QR, un lien. Le pro sent que son activité existe et peut circuler.</span>
+        </div>
 
-    try{
-      const host = new URL(proUrl).host.toLowerCase();
+        <div class="triadCard">
+          <div class="ico">⚡</div>
+          <strong>Puissance</strong>
+          <span>Moins de confusion, plus de gestes utiles : WhatsApp, Wave, fiche, message prêt et validation humaine.</span>
+        </div>
 
-      if(host.startsWith("pos.")) return "pos-" + p;
-      if(host.startsWith("pro-driver")) return "driver-" + p;
-      if(host.startsWith("pro-resto"))  return "resto-" + p;
-      if(host.startsWith("pro-resa"))   return "resa-" + p;
-      if(host.startsWith("pro-loc"))    return "loc-" + p;
-      if(host.startsWith("pro-market")) return "market-" + p;
-      if(host.startsWith("pro-build"))  return "build-" + p;
-      if(host.startsWith("pro-jobs"))   return "jobs-" + p;
+        <div class="triadCard">
+          <div class="ico">🛡️</div>
+          <strong>Indépendance</strong>
+          <span>Le client reste au pro. L’argent reste au pro. Le nom reste au pro. La relation reste directe.</span>
+        </div>
+      </div>
+    </section>
 
-      return "pro-" + p;
-    }catch(_){
-      return "";
-    }
-  }
+    <section class="section">
+      <h2>DIGIYLYFE se conduit à la voix et à l’image</h2>
+      <p>
+        DIGIYLYFE n’est pas seulement une suite de pages à lire. C’est une architecture de terrain
+        qui peut se conduire par la voix, par l’image, par le QR, par les boutons simples et par les messages prêts.
+      </p>
+      <p>
+        La voix aide celui qui ne veut pas trop écrire. L’image rassure celui qui veut voir.
+        Le QR fait circuler. WhatsApp relie. Wave paie directement. Le module métier organise.
+      </p>
 
-  function goPro(proUrl){
-    const savedPhone = localStorage.getItem("digiy_phone") || "";
-    const savedSlug  = localStorage.getItem("digiy_slug")  || "";
+      <div class="visualPanel">
+        <div class="visualBox">
+          <div class="visualIcon">🎙️</div>
+          <div>
+            <strong>La voix prépare</strong>
+            <span>
+              Le pro parle. DIGIY comprend, prépare, route vers le bon métier.
+              Le module contrôle. L’humain valide.
+            </span>
+          </div>
+        </div>
 
-    const phone = prompt("📱 Ton téléphone ?", savedPhone);
-    if(phone === null) return;
+        <div class="visualBox light">
+          <div class="visualIcon">🖼️</div>
+          <div>
+            <strong>L’image rassure</strong>
+            <span>
+              Fiches, photos, QR, cartes métier, preuves et boutons clairs :
+              le client voit avant de faire confiance.
+            </span>
+          </div>
+        </div>
+      </div>
 
-    const p = normPhone(phone);
-    if(p.length < 9){
-      alert("❌ Téléphone invalide. Exemple : 221771234567");
-      return;
-    }
+      <div class="quote">
+        La voix capte l’intention. L’image donne confiance. Le module prépare. L’humain valide.
+      </div>
+    </section>
 
-    const slugDefault = savedSlug || defaultSlugFromProUrl(proUrl, p);
-    const slug = prompt("🏷️ Ton accès, si tu l’as déjà ?", slugDefault);
-    if(slug === null) return;
+    <section class="section">
+      <h2>De l’ancien bouton à la nouvelle architecture</h2>
+      <p>
+        L’ancien code disait : “Activer mon outil.” Aujourd’hui, la doctrine a grandi :
+        on dit “Activer mon module”, et plus haut encore, “Entrer dans l’architecture DIGIY”.
+      </p>
+      <p>
+        Parce que DIGIYLYFE n’est pas une collection de pages séparées. C’est une maison organisée :
+        les modules métier, PAY pour lire l’argent, RÉSEAU pour la visibilité qualifiée,
+        BUSINESS pour apprendre, et la voix pour réduire l’écrit.
+      </p>
 
-    const s = normSlug(slug);
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div>
+            <strong>Choisir son module</strong>
+            <span>Je conduis, je loue, je réserve, je vends, je gère mon argent, je recrute, je propose mes services.</span>
+          </div>
+        </div>
 
-    localStorage.setItem("digiy_phone", p);
-    if(s) localStorage.setItem("digiy_slug", s);
+        <div class="step">
+          <div class="num">2</div>
+          <div>
+            <strong>Payer directement</strong>
+            <span>Le paiement reste direct. DIGIY ne se place pas entre le professionnel et son argent.</span>
+          </div>
+        </div>
 
-    const u = new URL(proUrl);
+        <div class="step">
+          <div class="num">3</div>
+          <div>
+            <strong>Envoyer la preuve</strong>
+            <span>La preuve est claire : module choisi, montant, canal, note. La validation reste humaine.</span>
+          </div>
+        </div>
 
-    if(s) u.searchParams.set("slug", s);
-    else u.searchParams.set("slug", defaultSlugFromProUrl(proUrl, p));
+        <div class="step">
+          <div class="num">4</div>
+          <div>
+            <strong>Recevoir son accès et circuler</strong>
+            <span>Fiche, QR, lien, messages prêts, visibilité. Le pro peut partager son activité avec dignité.</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    location.href = u.toString();
-  }
+    <section class="section">
+      <h2>Le téléphone comme pioche moderne</h2>
+      <p>
+        L’article frère, DIGIY BUSINESS — L’accélérateur des pistes du village, le dit avec force :
+        on vient avec son téléphone, on repart avec son business en main.
+      </p>
+      <p>
+        Le téléphone devient la pioche moderne. Il ne pèse presque rien, mais dedans il peut porter
+        une vitrine, un QR, un paiement, une fiche, un client, une preuve, une annonce, une caisse,
+        une réservation, une course, un devis, une mission.
+      </p>
+      <div class="quote">
+        DIGIYLYFE ne remplace pas le professionnel. Il lui donne des bras numériques.
+      </div>
+    </section>
 
-  document.querySelectorAll("#digiyButtons a[data-pro]").forEach(a=>{
-    const proUrl = a.getAttribute("data-pro");
-    a.href = proUrl;
-    a.addEventListener("click", (e)=>{
-      e.preventDefault();
-      goPro(proUrl);
-    });
-  });
-})();
-</script>
+    <section class="formula">
+      <h2>Le terrain garde la main</h2>
+      <p>
+        Le client reste le client du professionnel. L’argent reste l’argent du professionnel.
+        Le nom reste le nom du professionnel. La relation reste directe.
+      </p>
+      <p>
+        FIERTÉ. PUISSANCE. INDÉPENDANCE. C’est encore la braise.
+        DIGIYLYFE lui donne maintenant la maison.
+      </p>
 
+      <div class="bottomCta">
+        <a class="btn gold" href="https://tarifs.digiylyfe.com/">📦 Choisir mon module</a>
+        <a class="btn" href="https://digiy-hub.digiylyfe.com/">🧭 Ouvrir le HUB</a>
+        <a class="btn green" href="https://digiylyfe.com/">🌍 Voir DIGIYLYFE</a>
+      </div>
+    </section>
+  </main>
+
+  <button class="audioFloat" id="audioFloat" type="button">🎧 Écouter</button>
+
+  <footer class="wrap footer">
+    DIGIYLYFE — Architecture économique du terrain. Voix, image, QR, paiement direct, relation protégée.
+  </footer>
+
+  <script>
+    (function(){
+      "use strict";
+
+      const articleText = `
+Bienvenue dans diji laïfe.
+
+Fierté. Puissance. Indépendance.
+
+Il y a des pages qui vieillissent mal. Et il y a des pages qui gardent une braise.
+L’ancien écran DIGIY disait déjà l’essentiel : fierté, puissance, indépendance.
+
+Ce n’était pas seulement un slogan. C’était une direction.
+
+Derrière ces trois mots, il y avait déjà l’intuition de diji laïfe :
+ne pas enfermer le professionnel du terrain dans une plateforme qui prend son client,
+son nom, son argent ou sa relation.
+
+La fierté, c’est le moment où un chauffeur, un artisan, une boutique, un restaurant,
+un loueur, un guide, une femme commerçante ou un jeune travailleur voit son activité
+présentée proprement.
+
+Un nom. Un métier. Un téléphone. Une fiche. Un Q R. Un lien. Une présence partageable.
+
+La puissance n’est pas dans le bruit. Elle est dans la simplicité qui marche :
+un téléphone dans la main, un Q R sur une table, un lien dans Ouatsap,
+un paiement Ouève direct, une demande claire, un message prêt à envoyer,
+et une validation humaine.
+
+L’indépendance, c’est la règle sacrée :
+le client reste le client du professionnel.
+L’argent reste l’argent du professionnel.
+Le nom reste le nom du professionnel.
+La relation reste directe.
+
+diji laïfe se conduit à la voix et à l’image.
+
+La voix aide celui qui ne veut pas trop écrire.
+L’image rassure celui qui veut voir.
+Le Q R fait circuler.
+Ouatsap relie.
+Ouève paie directement.
+Le module métier organise.
+
+La voix capte l’intention.
+L’image donne confiance.
+Le module prépare.
+L’humain valide.
+
+Avant, on disait : activer mon outil.
+Aujourd’hui, on dit : activer mon module.
+Et plus haut encore : entrer dans l’architecture diji.
+
+Parce que diji laïfe n’est pas une collection de pages séparées.
+C’est une maison organisée :
+des modules métier, PAY pour lire l’argent,
+RÉSEAU pour la visibilité qualifiée,
+BUSINESS pour apprendre,
+et la voix pour réduire l’écrit.
+
+Le téléphone devient la pioche moderne.
+Il ne pèse presque rien, mais dedans il peut porter une vitrine,
+un Q R, un paiement, une fiche, un client, une preuve,
+une annonce, une caisse, une réservation, une course,
+un devis et une mission.
+
+diji laïfe ne remplace pas le professionnel.
+Il lui donne des bras numériques.
+
+Le terrain n’a pas besoin d’être capturé.
+Il a besoin d’être équipé.
+Il a besoin d’être respecté.
+Il a besoin de garder la main.
+
+Fierté. Puissance. Indépendance.
+C’est encore la braise.
+diji laïfe lui donne maintenant la maison.
+      `.trim();
+
+      const btnRead = document.getElementById("readArticle");
+      const btnPause = document.getElementById("pauseArticle");
+      const btnStop = document.getElementById("stopArticle");
+      const btnFloat = document.getElementById("audioFloat");
+      const progressWrap = document.getElementById("progressWrap");
+      const progressBar = document.getElementById("progressBar");
+
+      let utterance = null;
+      let playing = false;
+      let paused = false;
+      let timer = null;
+      let elapsed = 0;
+      let estimatedDuration = 30000;
+
+      function supported(){
+        return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+      }
+
+      function getVoice(){
+        const voices = window.speechSynthesis.getVoices() || [];
+        return (
+          voices.find(v => /^fr[-_]?FR/i.test(v.lang) && /google/i.test(v.name)) ||
+          voices.find(v => /^fr[-_]?FR/i.test(v.lang)) ||
+          voices.find(v => /^fr/i.test(v.lang)) ||
+          null
+        );
+      }
+
+      function setIdle(){
+        playing = false;
+        paused = false;
+        elapsed = 0;
+        clearInterval(timer);
+        timer = null;
+        progressBar.style.width = "0%";
+        progressWrap.style.display = "none";
+        btnRead.textContent = "🎧 Écouter l’article";
+        btnPause.textContent = "⏸ Pause";
+        btnFloat.textContent = "🎧 Écouter";
+      }
+
+      function setPlaying(){
+        playing = true;
+        paused = false;
+        btnRead.textContent = "🔊 Lecture en cours";
+        btnPause.textContent = "⏸ Pause";
+        btnFloat.textContent = "⏹ Stop";
+        progressWrap.style.display = "block";
+      }
+
+      function startProgress(){
+        const words = (articleText.match(/\S+/g) || []).length;
+        estimatedDuration = Math.max(18000, words * 470);
+        clearInterval(timer);
+
+        timer = setInterval(() => {
+          if (!playing || paused) return;
+          elapsed += 150;
+          const pct = Math.min((elapsed / estimatedDuration) * 100, 97);
+          progressBar.style.width = pct + "%";
+        }, 150);
+      }
+
+      function stop(){
+        if (!supported()) return;
+        try{ window.speechSynthesis.cancel(); }catch(_){}
+        utterance = null;
+        setIdle();
+      }
+
+      function speak(){
+        if (!supported()){
+          alert("La lecture audio n'est pas disponible sur ce téléphone.");
+          return;
+        }
+
+        if (playing){
+          stop();
+          return;
+        }
+
+        try{ window.speechSynthesis.cancel(); }catch(_){}
+
+        utterance = new SpeechSynthesisUtterance(articleText);
+        utterance.lang = "fr-FR";
+        utterance.rate = 0.88;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+
+        const voice = getVoice();
+        if (voice) utterance.voice = voice;
+
+        utterance.onstart = () => {
+          setPlaying();
+          startProgress();
+        };
+
+        utterance.onend = () => {
+          progressBar.style.width = "100%";
+          setTimeout(setIdle, 250);
+        };
+
+        utterance.onerror = () => {
+          stop();
+        };
+
+        window.speechSynthesis.speak(utterance);
+      }
+
+      function pauseResume(){
+        if (!supported() || !playing) return;
+
+        if (paused){
+          try{ window.speechSynthesis.resume(); }catch(_){}
+          paused = false;
+          btnPause.textContent = "⏸ Pause";
+        } else {
+          try{ window.speechSynthesis.pause(); }catch(_){}
+          paused = true;
+          btnPause.textContent = "▶️ Reprendre";
+        }
+      }
+
+      btnRead.addEventListener("click", speak);
+      btnFloat.addEventListener("click", speak);
+      btnPause.addEventListener("click", pauseResume);
+      btnStop.addEventListener("click", stop);
+
+      window.addEventListener("beforeunload", stop);
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && playing) stop();
+      });
+
+      if (!supported()){
+        btnRead.style.display = "none";
+        btnPause.style.display = "none";
+        btnStop.style.display = "none";
+        btnFloat.style.display = "none";
+      }
+    })();
+  </script>
 </body>
 </html>
 
